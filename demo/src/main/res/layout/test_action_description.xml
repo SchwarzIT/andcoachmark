@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txt_action_description"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foregroundGravity="center"
+    android:gravity="center"
+    android:padding="2dp"
+    android:text="this is the galaxy"
+    android:textColor="#FFFFFF"
+    android:textSize="20sp"/>

@@ -1,0 +1,71 @@
+apply plugin: 'com.android.library'
+apply plugin: 'android-apt'
+apply plugin: 'maven'
+apply plugin: 'jacoco'
+apply plugin: 'pmd'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url uri('libs') }
+        jcenter()
+
+    }
+    dependencies {
+        // replace with the current version of the android-apt plugin
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+apt {
+    arguments {
+        library 'true'
+    }
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://maven-repository.kaufland/nexus/content/repositories/kis-apps-ios-release-local") {
+                authentication(userName: "t-nexus-mobile", password: "Hoschie!")
+            }
+            snapshotRepository(url: "https://maven-repository.kaufland/nexus/content/repositories/kis-apps-ios-snapshot-local") {
+                authentication(userName: "t-nexus-mobile", password: "Hoschie!")
+            }
+            pom.version = "1.0.0"
+            pom.artifactId = "coachmarklibrary"
+            pom.groupId = "com.kaufland.android"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    apt "org.androidannotations:androidannotations:4.1.0"
+    compile 'org.androidannotations:androidannotations-api:4.1.0'
+    testCompile 'junit:junit:4.12'
+}
