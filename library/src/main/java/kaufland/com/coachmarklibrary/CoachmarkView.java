@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -20,10 +21,12 @@ import android.widget.TextView;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.DimensionPixelSizeRes;
 
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
-import kaufland.com.coachmarklibrary.renderer.actiondescription.RenderWhereSpaceActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.actiondescription.LeftOfCircleActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.actiondescription.RightOfCircleActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.actiondescription.TopOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
@@ -65,7 +68,12 @@ public class CoachmarkView extends FrameLayout {
     private View mActionDescription;
     private View mDescription;
 
-    private ActionDescriptionRenderer mActionDescriptionRenderer = new RenderWhereSpaceActionDescriptionRenderer();
+    private ActionDescriptionRenderer[] mActionDescriptionRenderer = new ActionDescriptionRenderer[]{
+            new LeftOfCircleActionDescriptionRenderer(),
+            new TopOfCircleActionDescriptionRenderer(),
+            new BelowCircleActionDescriptionRenderer(),
+            new RightOfCircleActionDescriptionRenderer()
+    };
 
     private DescriptionRenderer mDescriptionRenderer = new TopOrBottomDescriptionRenderer();
 
@@ -119,14 +127,27 @@ public class CoachmarkView extends FrameLayout {
                 mDescriptionRenderer.render(outerRectangle, centerY, mDescription);
             }
 
-            if(mActionDescription != null){
-                RectF circle = new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
-                mActionDescriptionRenderer.render(outerRectangle, circle, mActionDescription, mIvActionArrow);
+            if(mActionDescription != null && mActionDescriptionRenderer != null){
+                renderActionDescription(outerRectangle, radius, centerX, centerY);
+
             }
 
             osCanvas.drawCircle(centerX, centerY, radius, paint);
         }
 
+    }
+
+    private void renderActionDescription(RectF outerRectangle, float radius, float centerX, float centerY) {
+        RectF circle = new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+        Rect actionDescriptionRec = new Rect(mActionDescription.getLeft(), mActionDescription.getTop(), mActionDescription.getRight(), mActionDescription.getBottom());
+        Rect actionArrowRec = new Rect(mIvActionArrow.getLeft(), mIvActionArrow.getTop(), mIvActionArrow.getRight(), mIvActionArrow.getBottom());
+
+        for(ActionDescriptionRenderer renderer : mActionDescriptionRenderer){
+            if(renderer.isRenderingPossible(outerRectangle, circle, actionDescriptionRec, actionArrowRec)){
+                renderer.render(outerRectangle, circle, mActionDescription, mIvActionArrow);
+                return;
+            }
+        }
     }
 
 
@@ -166,7 +187,7 @@ public class CoachmarkView extends FrameLayout {
         addView(mDescription);
     }
 
-    public void setActionDescriptionRenderer(ActionDescriptionRenderer actionDescriptionRenderer) {
+    public void setActionDescriptionRenderer(ActionDescriptionRenderer[] actionDescriptionRenderer) {
         mActionDescriptionRenderer = actionDescriptionRenderer;
     }
 
