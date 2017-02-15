@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -12,15 +13,22 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EViewGroup;
+import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.ColorRes;
+import org.androidannotations.annotations.res.DimensionPixelSizeRes;
 
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActionDescriptionRenderer;
@@ -35,6 +43,9 @@ import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescription
  */
 @EViewGroup(resName = "coachmark_view")
 public class CoachmarkView extends FrameLayout {
+
+    @SystemService
+    WindowManager mWindowManager;
 
     @ViewById(resName = "txt_ok_btn")
     TextView mTxtOkBtn;
@@ -54,19 +65,23 @@ public class CoachmarkView extends FrameLayout {
     @ViewById(resName = "iv_action_arrow")
     ImageView mIvActionArrow;
 
+    @DimensionPixelSizeRes(resName = "default_margin_circle")
+    protected int marginArroundCircle;
+
+    @ColorRes(resName = "default_backcolor")
+    protected int defaultBackColor;
+
 
     private Bitmap bitmap;
 
     private View view;
 
-    private int backColor;
-
-    private int paddingAroundCircle;
-
     private int windowHeight;
 
     private View mActionDescription;
     private View mDescription;
+
+
 
     private ActionDescriptionRenderer[] mActionDescriptionRenderer = new ActionDescriptionRenderer[]{
             new LeftOfCircleActionDescriptionRenderer(),
@@ -90,6 +105,7 @@ public class CoachmarkView extends FrameLayout {
         super(context, attrs, defStyleAttr);
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public CoachmarkView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -111,14 +127,14 @@ public class CoachmarkView extends FrameLayout {
         RectF outerRectangle = new RectF(0, 0, getWidth(), getHeight());
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(backColor);
+        paint.setColor(defaultBackColor);
         osCanvas.drawRect(outerRectangle, paint);
 
         paint.setColor(Color.TRANSPARENT);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
 
         if (view != null) {
-            float radius = paddingAroundCircle + view.getWidth() / 2;
+            float radius = marginArroundCircle + view.getWidth() / 2;
             int[] xy = new int[2];
             view.getLocationInWindow(xy);
             float centerX = xy[0] + view.getWidth() / 2;
@@ -136,6 +152,28 @@ public class CoachmarkView extends FrameLayout {
         }
 
     }
+
+    public void show(){
+        DisplayMetrics metrics = new DisplayMetrics();
+        mWindowManager.getDefaultDisplay().getMetrics(metrics);
+
+        windowHeight = metrics.heightPixels;
+
+        WindowManager.LayoutParams mWindowParams = new WindowManager.LayoutParams();
+        mWindowParams.gravity = Gravity.TOP;
+        mWindowParams.x = 0;
+        mWindowParams.y = 0;
+        mWindowParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+        mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_ATTACHED_IN_DECOR;
+        mWindowParams.format = PixelFormat.TRANSLUCENT;
+        mWindowParams.windowAnimations = 0;
+
+
+        mWindowManager.addView(this, mWindowParams);
+        requestLayout();
+    }
+
 
     private void renderActionDescription(RectF outerRectangle, float radius, float centerX, float centerY) {
         RectF circle = new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
@@ -195,10 +233,41 @@ public class CoachmarkView extends FrameLayout {
         mDescriptionRenderer = descriptionRenderer;
     }
 
-    public void setCoachMarkTextData(CoachMarkTextData coachMarkTextData) {
+    public void setOkButton(String okText, final CoachmarkClickListener clickListener){
 
-        mTxtOkBtn.setText(coachMarkTextData.getOkText());
-        mTxtCancelBtn.setText(coachMarkTextData.getCancelText());
+            mGroupOk.setVisibility(VISIBLE);
+            mTxtOkBtn.setText(okText);
+            mGroupOk.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWindowManager.removeView(CoachmarkView.this);
+                    clickListener.onClicked();
+                }
+            });
+    }
+
+    public void setCancelButton(String okText, final CoachmarkClickListener clickListener){
+
+        mGroupCancel.setVisibility(VISIBLE);
+        mTxtCancelBtn.setText(okText);
+        mGroupCancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mWindowManager.removeView(CoachmarkView.this);
+                clickListener.onClicked();
+            }
+        });
+    }
+
+    public void setDismissOnClick(boolean dismissOnClick) {
+        if(dismissOnClick){
+            setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWindowManager.removeView(CoachmarkView.this);
+                }
+            });
+        }
     }
 
     public void setView(View view) {
@@ -207,22 +276,11 @@ public class CoachmarkView extends FrameLayout {
     }
 
     public void setBackColor(int backColor) {
-        this.backColor = backColor;
+        this.defaultBackColor = backColor;
     }
 
     public void setPaddingAroundCircle(int paddingAroundCircle) {
-        this.paddingAroundCircle = paddingAroundCircle;
+        this.marginArroundCircle = paddingAroundCircle;
     }
 
-    public void setWindowHeight(int windowHeight) {
-        this.windowHeight = windowHeight;
-    }
-
-    public LinearLayout getOkGroup() {
-        return mGroupOk;
-    }
-
-    public LinearLayout getCancelGroup() {
-        return mGroupCancel;
-    }
 }

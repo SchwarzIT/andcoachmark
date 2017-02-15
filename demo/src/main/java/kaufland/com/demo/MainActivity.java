@@ -7,9 +7,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
-import kaufland.com.coachmarklibrary.CoachMarkTextData;
-import kaufland.com.coachmarklibrary.CoachmarkHandler_;
+import kaufland.com.coachmarklibrary.CoachmarkClickListener;
+import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
 
 public class MainActivity extends AppCompatActivity implements DemoClickListener {
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setUpCoachmark(view);
+                setupWithoutButtons(view);
             }
         });
 
@@ -43,19 +44,46 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
 
     @Override
     public void onClick(View view) {
-        setUpCoachmark(view);
+        setupCoachmark(view);
     }
 
-    private void setUpCoachmark(View clickedView) {
+    private void setupWithoutButtons(View clickedView){
         LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        CoachMarkTextData textData = new CoachMarkTextData();
-        textData.setOkText("OK");
-        textData.setCancelText("Cancel");
 
         View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
         View description = mInflater.inflate(R.layout.test_description, null);
 
-        CoachmarkHandler_.getInstance_(MainActivity.this).showCoachmarkAround(clickedView, textData, actionDescription, description);
+        new CoachmarkViewBuilder(MainActivity.this)
+                .withActionDescription(actionDescription)
+                .withDescription(description)
+                .dismissOnTouch()
+                .buildAroundView(clickedView).show();
+    }
+
+    private void setupCoachmark(View clickedView) {
+        LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
+        View description = mInflater.inflate(R.layout.test_description, null);
+
+        new CoachmarkViewBuilder(MainActivity.this)
+                .withActionDescription(actionDescription)
+                .withDescription(description)
+                .withCancelButton("Cancel", new CoachmarkClickListener() {
+                    @Override
+                    public boolean onClicked() {
+                        Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                })
+                .withOkButton("OK", new CoachmarkClickListener() {
+                    @Override
+                    public boolean onClicked() {
+                        Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                })
+                .buildAroundView(clickedView).show();
+
     }
 }
