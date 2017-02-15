@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.List;
-
-import kaufland.com.coachmarklibrary.CoachMarkTextData;
-import kaufland.com.coachmarklibrary.CoachmarkHandler_;
+import kaufland.com.coachmarklibrary.CoachmarkButton;
+import kaufland.com.coachmarklibrary.CoachmarkClickListener;
+import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        TestAdapter(){
-            items = new String[]{"1","2","3","4","2","3","4","2","3","4","2","3","4","2","3","4","2","3","4","2","3","4","2","3","4","2","3","4","2","3","4",};
+        TestAdapter() {
+            items = new String[]{"1", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4",};
         }
 
         @Override
@@ -56,27 +56,42 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-                holder.title.setText(items[position]);
+            holder.title.setText(items[position]);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                 setUpCoachmark(v);
+                    setUpCoachmark(v);
                 }
             });
         }
 
-        private void setUpCoachmark(View clickedView){
-           LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        private void setUpCoachmark(View clickedView) {
+            LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-            CoachMarkTextData textData = new CoachMarkTextData();
-            textData.setOkText("OK");
-            textData.setCancelText("Cancel");
 
-            View actionDescription = mInflater.inflate(R.layout.test_action_description,  null);
-            View description = mInflater.inflate(R.layout.test_description,  null);
+            View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
+            View description = mInflater.inflate(R.layout.test_description, null);
 
-            CoachmarkHandler_.getInstance_(MainActivity.this).showCoachmarkAround(clickedView, textData, actionDescription, description);
+            new CoachmarkViewBuilder(MainActivity.this)
+                    .withActionDescription(actionDescription)
+                    .withDescription(description)
+                    .withCancelButton("Cancel", new CoachmarkClickListener() {
+                        @Override
+                        public boolean onClicked() {
+                            Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                            return true;
+                        }
+                    })
+                    .withOkButton("OK", new CoachmarkClickListener() {
+                        @Override
+                        public boolean onClicked() {
+                            Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
+                            return true;
+                        }
+                    })
+                    .buildAroundView(clickedView).show();
+
         }
 
         @Override
