@@ -3,6 +3,9 @@ package kaufland.com.coachmarklibrary;
 import android.content.Context;
 import android.view.View;
 
+import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
+
 /**
  * Created by sbra0902 on 15.02.17.
  */
@@ -37,6 +40,16 @@ public class CoachmarkViewBuilder {
 
     public CoachmarkViewBuilder dismissOnTouch(){
         mCoachmarkView.setDismissOnClick(true);
+        return this;
+    }
+
+    public CoachmarkViewBuilder withActionDescriptionRenderers(ActionDescriptionRenderer... renderers){
+        mCoachmarkView.setActionDescriptionRenderer(renderers);
+        return this;
+    }
+
+    public CoachmarkViewBuilder withDescriptionRenderer(DescriptionRenderer renderer){
+        mCoachmarkView.setDescriptionRenderer(renderer);
         return this;
     }
 

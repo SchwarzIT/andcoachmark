@@ -23,6 +23,6 @@ public class BelowCircleActionDescriptionRenderer implements ActionDescriptionRe
 
     @Override
     public boolean isRenderingPossible(RectF screenRectangle, RectF circleRectangle, Rect actionDescriptionRectangle, Rect actionArrowRectangle) {
-        return actionDescriptionRectangle.width() < circleRectangle.centerX();
+        return (circleRectangle.bottom + actionDescriptionRectangle.height() + actionArrowRectangle.height()) < screenRectangle.height()  && (actionDescriptionRectangle.width() / 2) < circleRectangle.centerX() && (actionDescriptionRectangle.width() / 2) < (screenRectangle.width() - circleRectangle.centerX());
     }
 }

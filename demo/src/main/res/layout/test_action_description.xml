@@ -7,6 +7,6 @@
     android:foregroundGravity="center"
     android:gravity="center"
     android:padding="2dp"
-    android:text="this is the galaxy"
+    android:text="[ActionDescription]"
     android:textColor="#FFFFFF"
     android:textSize="20sp"/>

@@ -7,6 +7,6 @@
     android:gravity="center"
     android:paddingBottom="72dp"
     android:paddingTop="72dp"
-    android:text="it was once a long time ago in a far distant galaxy"
+    android:text="This is the [Description] of this Coachmark"
     android:textColor="#FFFFFF"
     android:textSize="24sp"/>

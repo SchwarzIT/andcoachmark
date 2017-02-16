@@ -23,6 +23,6 @@ public class TopOfCircleActionDescriptionRenderer implements ActionDescriptionRe
 
     @Override
     public boolean isRenderingPossible(RectF screenRectangle, RectF circleRectangle, Rect actionDescriptionRectangle, Rect actionArrowRectangle) {
-        return circleRectangle.top > actionDescriptionRectangle.height() + actionArrowRectangle.height() && actionDescriptionRectangle.width() < circleRectangle.centerX();
+        return circleRectangle.top > actionDescriptionRectangle.height() + actionArrowRectangle.height() && (actionDescriptionRectangle.width() / 2) < circleRectangle.centerX() && (actionDescriptionRectangle.width() / 2) < (screenRectangle.width() - circleRectangle.centerX());
     }
 }

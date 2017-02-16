@@ -225,7 +225,7 @@ public class CoachmarkView extends FrameLayout {
         addView(mDescription);
     }
 
-    public void setActionDescriptionRenderer(ActionDescriptionRenderer[] actionDescriptionRenderer) {
+    public void setActionDescriptionRenderer(ActionDescriptionRenderer... actionDescriptionRenderer) {
         mActionDescriptionRenderer = actionDescriptionRenderer;
     }
 
