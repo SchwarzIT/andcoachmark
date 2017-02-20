@@ -3,6 +3,7 @@ apply plugin: 'android-apt'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
 apply plugin: 'pmd'
+apply plugin: 'net.researchgate.release'
 
 android {
     compileSdkVersion 24
@@ -33,6 +34,7 @@ buildscript {
     dependencies {
         // replace with the current version of the android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'net.researchgate:gradle-release:2.4.0'
     }
 }
 
