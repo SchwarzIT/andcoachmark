@@ -59,7 +59,7 @@ public class OkBelowDescriptionButtonRenderer implements ButtonRenderer {
 
         if (mBorder != 0) {
             GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setStroke(mBorder, mColor != null ? mColor : layout.getContext().getResources().getColor(R.color.default_border_color));
+            gradientDrawable.setStroke(mBorder, mColor != null ? mColor : layout.getContext().getColor(R.color.default_border_color));
             mGroupOk.setBackground(gradientDrawable);
 
         }
