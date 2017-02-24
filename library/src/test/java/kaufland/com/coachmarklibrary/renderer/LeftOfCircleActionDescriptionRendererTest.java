@@ -34,10 +34,12 @@ public class LeftOfCircleActionDescriptionRendererTest {
         Mockito.when(actionDescription.getHeight()).thenReturn(20);
 
 
-        RectF screenRectangle = new RectF(0, 0, 300, 300);
-        RectF circleRectangle = new RectF(50, 50, 75, 75);
+        CoachmarkViewLayout layoutMock = Mockito.mock(CoachmarkViewLayout.class);
 
-        new LeftOfCircleActionDescriptionRenderer().render(screenRectangle, circleRectangle, actionDescription, actionArrow);
+        Mockito.when(layoutMock.calcScreenRectF()).thenReturn(new RectF(0, 0, 300, 95));
+        Mockito.when(layoutMock.calcCircleRectF()).thenReturn(new RectF(50, 50, 75, 75));
+
+        new LeftOfCircleActionDescriptionRenderer().render(layoutMock, actionDescription, actionArrow);
 
         verify(actionDescription, times(1)).setX(5);
         verify(actionDescription, times(1)).setY(52.5f);
@@ -50,24 +52,28 @@ public class LeftOfCircleActionDescriptionRendererTest {
     @Test
     public void isRenderingPossibleTest() {
 
-        RectF screenRectangle = new RectF(0, 0, 300, 300);
-        RectF circleRectangle = new RectF(50, 50, 75, 75);
-        Rect actionDescriptionRectangle = new Rect(0, 0, 39, 20);
-        Rect actionArrowRectangle = new Rect(0,0, 10, 10);
+        CoachmarkViewLayout layoutMock = Mockito.mock(CoachmarkViewLayout.class);
 
-        Assert.assertTrue(new LeftOfCircleActionDescriptionRenderer().isRenderingPossible(screenRectangle, circleRectangle, actionDescriptionRectangle, actionArrowRectangle));
+        Mockito.when(layoutMock.calcScreenRectF()).thenReturn(new RectF(0, 0, 300, 300));
+        Mockito.when(layoutMock.calcCircleRectF()).thenReturn(new RectF(50, 50, 75, 75));
+        Mockito.when(layoutMock.calcActionDescriptionRect()).thenReturn(new RectF(0, 0, 39, 20));
+        Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0,0, 10, 10));
+
+        Assert.assertTrue(new LeftOfCircleActionDescriptionRenderer().isRenderingPossible(layoutMock));
 
     }
 
     @Test
     public void renderingNotPossibleNotEnoughLeftSpaceTest() {
 
-        RectF screenRectangle = new RectF(0, 0, 300, 300);
-        RectF circleRectangle = new RectF(50, 50, 75, 75);
-        Rect actionDescriptionRectangle = new Rect(0, 0, 40, 20);
-        Rect actionArrowRectangle = new Rect(0,0, 10, 10);
+        CoachmarkViewLayout layoutMock = Mockito.mock(CoachmarkViewLayout.class);
 
-        Assert.assertFalse(new LeftOfCircleActionDescriptionRenderer().isRenderingPossible(screenRectangle, circleRectangle, actionDescriptionRectangle, actionArrowRectangle));
+        Mockito.when(layoutMock.calcScreenRectF()).thenReturn(new RectF(0, 0, 300, 300));
+        Mockito.when(layoutMock.calcCircleRectF()).thenReturn(new RectF(50, 50, 75, 75));
+        Mockito.when(layoutMock.calcActionDescriptionRect()).thenReturn(new RectF(0, 0, 40, 20));
+        Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0,0, 10, 10));
+
+        Assert.assertFalse(new LeftOfCircleActionDescriptionRenderer().isRenderingPossible(layoutMock));
 
     }
 

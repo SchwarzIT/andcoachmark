@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
 
 public class MainActivity extends AppCompatActivity implements DemoClickListener {
 
@@ -34,7 +37,14 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setupWithoutButtons(view);
+                setupWithButtonBelowDescription(view);
+            }
+        });
+
+        findViewById(R.id.fabTop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setupWithButtonBelowDescription(view);
             }
         });
 
@@ -47,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         setupCoachmark(view);
     }
 
-    private void setupWithoutButtons(View clickedView){
+    private void setupWithoutButtons(View clickedView) {
         LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
@@ -56,7 +66,20 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         new CoachmarkViewBuilder(MainActivity.this)
                 .withActionDescription(actionDescription)
                 .withDescription(description)
-                .dismissOnTouch()
+                .withButtonRenderer(new DismissOnTouchNoButtonRenderer.Builder().build())
+                .buildAroundView(clickedView).show();
+    }
+
+    private void setupWithButtonBelowDescription(View clickedView) {
+        LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
+        View description = mInflater.inflate(R.layout.test_description, null);
+
+        new CoachmarkViewBuilder(MainActivity.this)
+                .withActionDescription(actionDescription)
+                .withDescription(description)
+                .withButtonRenderer(new OkBelowDescriptionButtonRenderer.Builder().withBorder(4, null).withOkButton("Ok", null).build())
                 .buildAroundView(clickedView).show();
     }
 
@@ -66,9 +89,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
         View description = mInflater.inflate(R.layout.test_description, null);
 
-        new CoachmarkViewBuilder(MainActivity.this)
-                .withActionDescription(actionDescription)
-                .withDescription(description)
+        OkAndCancelAtRightCornerButtonRenderer buttonRenderer = new OkAndCancelAtRightCornerButtonRenderer.Builder(this)
                 .withCancelButton("Cancel", new CoachmarkClickListener() {
                     @Override
                     public boolean onClicked() {
@@ -83,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                         return true;
                     }
                 })
+                .build();
+
+        new CoachmarkViewBuilder(MainActivity.this)
+                .withActionDescription(actionDescription)
+                .withDescription(description)
+                .withButtonRenderer(buttonRenderer)
                 .buildAroundView(clickedView).show();
 
     }

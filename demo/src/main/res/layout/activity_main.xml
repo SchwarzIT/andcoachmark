@@ -14,7 +14,17 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
+        android:layout_weight="1"
         android:layout_height="match_parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabTop"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="top|right"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_add_white_24dp"
+        app:elevation="4dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

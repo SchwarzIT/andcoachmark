@@ -3,7 +3,9 @@ package kaufland.com.coachmarklibrary;
 import android.content.Context;
 import android.view.View;
 
+import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 
 /**
@@ -18,28 +20,18 @@ public class CoachmarkViewBuilder {
         mCoachmarkView = CoachmarkView_.build(context);
     }
 
-    public CoachmarkViewBuilder withOkButton(String okText, CoachmarkClickListener clickListener) {
-        mCoachmarkView.setOkButton(okText, clickListener);
+    public CoachmarkViewBuilder withButtonRenderer(ButtonRenderer renderer) {
+        mCoachmarkView.setButtonRenderer(renderer);
         return this;
     }
 
-    public CoachmarkViewBuilder withCancelButton(String cancelText, CoachmarkClickListener clickListener){
-        mCoachmarkView.setCancelButton(cancelText, clickListener);
-        return this;
-    }
-
-    public CoachmarkView buildAroundView(View view){
+    public CoachmarkViewLayout buildAroundView(View view){
         mCoachmarkView.setView(view);
         return mCoachmarkView;
     }
 
     public CoachmarkViewBuilder withBackgroundColor(int color){
         mCoachmarkView.setBackColor(color);
-        return this;
-    }
-
-    public CoachmarkViewBuilder dismissOnTouch(){
-        mCoachmarkView.setDismissOnClick(true);
         return this;
     }
 

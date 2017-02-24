@@ -14,6 +14,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -43,21 +45,14 @@ public class CoachmarkViewBuilderTest {
     }
 
     @Test
-    public void withOkButtonTest() throws Exception {
+    public void withButtonRendererTest() throws Exception {
 
         CoachmarkClickListener mListener = Mockito.mock(CoachmarkClickListener.class);
-        mBuilderToTest.withOkButton("test", mListener);
 
-        verify(mCoachmarkViewMock, times(1)).setOkButton("test", mListener);
-    }
+        ButtonRenderer rendererMock = Mockito.mock(ButtonRenderer.class);
+        mBuilderToTest.withButtonRenderer(rendererMock);
 
-    @Test
-    public void withCancelButtonTest() throws Exception {
-
-        CoachmarkClickListener mListener = Mockito.mock(CoachmarkClickListener.class);
-        mBuilderToTest.withCancelButton("test", mListener);
-
-        verify(mCoachmarkViewMock, times(1)).setCancelButton("test", mListener);
+        verify(mCoachmarkViewMock, times(1)).setButtonRenderer(rendererMock);
     }
 
     @Test
@@ -66,14 +61,6 @@ public class CoachmarkViewBuilderTest {
         mBuilderToTest.withBackgroundColor(0);
 
         verify(mCoachmarkViewMock, times(1)).setBackColor(0);
-    }
-
-    @Test
-    public void dismissOnTouchTest() throws Exception {
-
-        mBuilderToTest.dismissOnTouch();
-
-        verify(mCoachmarkViewMock, times(1)).setDismissOnClick(true);
     }
 
     @Test
