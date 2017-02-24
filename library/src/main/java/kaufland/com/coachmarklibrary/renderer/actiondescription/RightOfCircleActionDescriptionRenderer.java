@@ -4,6 +4,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
+import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
+
 /**
  * Created by sbra0902 on 13.02.17.
  */
@@ -11,7 +13,9 @@ import android.view.View;
 public class RightOfCircleActionDescriptionRenderer implements ActionDescriptionRenderer {
 
     @Override
-    public void render(RectF screenRectangle, RectF circleRectangle, View actionDescription, View actionArrow) {
+    public void render(CoachmarkViewLayout layout, View actionDescription, View actionArrow) {
+
+        RectF circleRectangle = layout.calcCircleRectF();
 
         actionDescription.setX((int) (circleRectangle.right + actionArrow.getWidth()));
         actionDescription.setY(circleRectangle.centerY() - (actionDescription.getHeight() / 2));
@@ -22,7 +26,12 @@ public class RightOfCircleActionDescriptionRenderer implements ActionDescription
     }
 
     @Override
-    public boolean isRenderingPossible(RectF screenRectangle, RectF circleRectangle, Rect actionDescriptionRectangle, Rect actionArrowRectangle) {
+    public boolean isRenderingPossible(CoachmarkViewLayout layout) {
+        RectF circleRectangle = layout.calcCircleRectF();
+        RectF actionDescriptionRectangle = layout.calcActionDescriptionRect();
+        RectF actionArrowRectangle = layout.calcActionArrowRect();
+        RectF screenRectangle = layout.calcScreenRectF();
+
         return (actionDescriptionRectangle.width() + actionArrowRectangle.width()) < (screenRectangle.width() - circleRectangle.right);
     }
 }
