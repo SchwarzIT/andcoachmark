@@ -1,6 +1,5 @@
 package kaufland.com.coachmarklibrary.renderer;
 
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
@@ -11,14 +10,11 @@ import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
 import kaufland.com.coachmarklibrary.renderer.actiondescription.LeftOfCircleActionDescriptionRenderer;
-import kaufland.com.coachmarklibrary.renderer.actiondescription.TopOfCircleActionDescriptionRenderer;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-/**
- * Created by sbra0902 on 13.02.17.
- */
+
 @RunWith(RobolectricTestRunner.class)
 public class LeftOfCircleActionDescriptionRendererTest {
 
@@ -57,7 +53,7 @@ public class LeftOfCircleActionDescriptionRendererTest {
         Mockito.when(layoutMock.calcScreenRectF()).thenReturn(new RectF(0, 0, 300, 300));
         Mockito.when(layoutMock.calcCircleRectF()).thenReturn(new RectF(50, 50, 75, 75));
         Mockito.when(layoutMock.calcActionDescriptionRect()).thenReturn(new RectF(0, 0, 39, 20));
-        Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0,0, 10, 10));
+        Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0, 0, 10, 10));
 
         Assert.assertTrue(new LeftOfCircleActionDescriptionRenderer().isRenderingPossible(layoutMock));
 
@@ -71,7 +67,7 @@ public class LeftOfCircleActionDescriptionRendererTest {
         Mockito.when(layoutMock.calcScreenRectF()).thenReturn(new RectF(0, 0, 300, 300));
         Mockito.when(layoutMock.calcCircleRectF()).thenReturn(new RectF(50, 50, 75, 75));
         Mockito.when(layoutMock.calcActionDescriptionRect()).thenReturn(new RectF(0, 0, 40, 20));
-        Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0,0, 10, 10));
+        Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0, 0, 10, 10));
 
         Assert.assertFalse(new LeftOfCircleActionDescriptionRenderer().isRenderingPossible(layoutMock));
 

@@ -1,10 +1,5 @@
 package kaufland.com.coachmarklibrary;
 
-import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +11,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -36,7 +30,7 @@ public class CoachmarkViewBuilderTest {
     CoachmarkViewBuilder mBuilderToTest;
 
     @Before
-    public void init(){
+    public void init() {
 
         PowerMockito.mockStatic(CoachmarkView_.class);
         PowerMockito.when(CoachmarkView_.build(null)).thenReturn(mCoachmarkViewMock);
