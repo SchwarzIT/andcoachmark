@@ -19,13 +19,25 @@ Is a library that provides a highly customizable CoachmarkView
 
 ## Implementation
 
-1. Add gradle dependency
+
+1. Add it in your root build.gradle at the end of repositories:
+
+	 ```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	```
+
+2. Add gradle dependency
 
     ```
     compile 'com.github.kaufland:andcoachmark:1.1.2'
     ```
 
-2. Configure Coachmark 
+3. Configure Coachmark 
 
 	``` java
 	LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
