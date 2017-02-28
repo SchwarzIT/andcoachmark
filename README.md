@@ -8,7 +8,7 @@ Is a library that provides a highly customizable CoachmarkView
 
 ![](https://picload.org/image/rlrporga/ezgif-2-96da2400cb.gif)
 
-## Feature
+## Features
 
 * The Description Text dynamically renders text on top or bottom.
 * The ActionDescriptionText (Text with arrow to the circle) dynamically renders left/top/bottom/right with this priority.
@@ -25,7 +25,7 @@ Is a library that provides a highly customizable CoachmarkView
 compile 'com.github.kaufland:andcoachmark:1.1.2'
 ```
 
-2.) Configure Coachmark 
+2. Configure Coachmark 
 
 ``` java
 LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
