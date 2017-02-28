@@ -1,6 +1,8 @@
 # andcoachmark
 
-Is a library that provide a highly customizable CoachmarkView
+[![Build Status](https://travis-ci.org/Kaufland/andcoachmark.svg?branch=master)](https://travis-ci.org/Kaufland/andcoachmark)
+
+Is a library that provides a highly customizable CoachmarkView
 
 ## Demo
 
@@ -8,12 +10,12 @@ Is a library that provide a highly customizable CoachmarkView
 
 ## Feature
 
-* The Description Text renders dynamicaly Text on top or bottom.
-* The ActionDescriptionText (Text with arrow to the circle) renders dynamically left/top/bottom/right with this priority.
-* These both Views can be customized library takes inflated views as parameter.
-* Aboved discribed rendering strategy can be replaced by own implementations or the priority of the available strategies can be changed.
-* Decide how the Button to close the coachmark should appear (cancel/ok on right side, ok button below description, no button just click to dismiss). Its also possible to write own rendering.
-* All Colors and Texts can be changed while setup the Coachmark with the provided Builder.
+* The Description Text dynamically renders text on top or bottom.
+* The ActionDescriptionText (Text with arrow to the circle) dynamically renders left/top/bottom/right with this priority.
+* These both views can be customized - the library takes inflated views as parameter.
+* Aboved described rendering strategy can be replaced by own implementations or the priority of the available strategies can be changed.
+* Decide how the button that closes the coachmark should appear (cancel/ok on right side, ok button below description, no button just click to dismiss). It's also possible to write own rendering.
+* All colors and texts can be changed when setting up the Coachmark with the provided Builder.
 
 ## Implementation
 
