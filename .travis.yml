@@ -17,6 +17,9 @@ android:
     
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-24
+  licenses:
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 before_install:
 - chmod +x gradlew
