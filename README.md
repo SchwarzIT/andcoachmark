@@ -27,34 +27,34 @@ Is a library that provides a highly customizable CoachmarkView
 
 2. Configure Coachmark 
 
-``` java
-LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        
-View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
-View description = mInflater.inflate(R.layout.test_description, null);
+	``` java
+	LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+	        
+	View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
+	View description = mInflater.inflate(R.layout.test_description, null);
 
-OkAndCancelAtRightCornerButtonRenderer buttonRenderer = new OkAndCancelAtRightCornerButtonRenderer.Builder(this)
-         .withCancelButton("Cancel", new CoachmarkClickListener() {
-                @Override
-                    public boolean onClicked() {
-                        Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
-                        //return true to dismiss the coachmark
-                        return true;
-                    }
-                })
-          .withOkButton("OK", new CoachmarkClickListener() {
-                    @Override
-                    public boolean onClicked() {
-                        Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
-                        //return true to dismiss the coachmark
-                    }
-                })
-          .build();
+	OkAndCancelAtRightCornerButtonRenderer buttonRenderer = new OkAndCancelAtRightCornerButtonRenderer.Builder(this)
+         	.withCancelButton("Cancel", new CoachmarkClickListener() {
+                	@Override
+                    	public boolean onClicked() {
+                        	Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                        	//return true to dismiss the coachmark
+                        	return true;
+                    	}
+                	})
+          	.withOkButton("OK", new CoachmarkClickListener() {
+                    	@Override
+                    	public boolean onClicked() {
+                        	Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
+                        	//return true to dismiss the coachmark
+                    	}
+                	})
+          	.build();
 
-new CoachmarkViewBuilder(MainActivity.this)
-    .withActionDescription(actionDescription)
-    .withDescription(description)
-    .withButtonRenderer(buttonRenderer)
-    .buildAroundView(clickedView).show();
-```
+	new CoachmarkViewBuilder(MainActivity.this)
+    	.withActionDescription(actionDescription)
+    	.withDescription(description)
+    	.withButtonRenderer(buttonRenderer)
+    	.buildAroundView(clickedView).show();
+	```
 
