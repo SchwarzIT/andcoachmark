@@ -17,6 +17,10 @@ android:
     
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-25
+    
+    - extra-android-m2repository
+    - extra-google-m2repository    
+
   licenses:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
