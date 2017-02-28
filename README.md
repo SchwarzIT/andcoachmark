@@ -21,9 +21,9 @@ Is a library that provides a highly customizable CoachmarkView
 
 1. Add gradle dependency
 
-```
-compile 'com.github.kaufland:andcoachmark:1.1.2'
-```
+    ```
+    compile 'com.github.kaufland:andcoachmark:1.1.2'
+    ```
 
 2. Configure Coachmark 
 
