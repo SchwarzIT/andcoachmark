@@ -48,6 +48,10 @@ apt {
     }
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.0'
+}
+
 
 uploadArchives {
     repositories {
