@@ -8,10 +8,6 @@ import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptio
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 
-/**
- * Created by sbra0902 on 15.02.17.
- */
-
 public class CoachmarkViewBuilder {
 
     private CoachmarkView mCoachmarkView;
@@ -25,37 +21,37 @@ public class CoachmarkViewBuilder {
         return this;
     }
 
-    public CoachmarkViewLayout buildAroundView(View view){
+    public CoachmarkViewLayout buildAroundView(View view) {
         mCoachmarkView.setView(view);
         return mCoachmarkView;
     }
 
-    public CoachmarkViewBuilder withBackgroundColor(int color){
+    public CoachmarkViewBuilder withBackgroundColor(int color) {
         mCoachmarkView.setBackColor(color);
         return this;
     }
 
-    public CoachmarkViewBuilder withActionDescriptionRenderers(ActionDescriptionRenderer... renderers){
+    public CoachmarkViewBuilder withActionDescriptionRenderers(ActionDescriptionRenderer... renderers) {
         mCoachmarkView.setActionDescriptionRenderer(renderers);
         return this;
     }
 
-    public CoachmarkViewBuilder withDescriptionRenderer(DescriptionRenderer renderer){
+    public CoachmarkViewBuilder withDescriptionRenderer(DescriptionRenderer renderer) {
         mCoachmarkView.setDescriptionRenderer(renderer);
         return this;
     }
 
-    public CoachmarkViewBuilder withActionDescription(View actionDescription){
+    public CoachmarkViewBuilder withActionDescription(View actionDescription) {
         mCoachmarkView.setActionDescription(actionDescription);
         return this;
     }
 
-    public CoachmarkViewBuilder withDescription(View description){
+    public CoachmarkViewBuilder withDescription(View description) {
         mCoachmarkView.setDescription(description);
         return this;
     }
 
-    public CoachmarkViewBuilder withPaddingAroundCircle(int padding){
+    public CoachmarkViewBuilder withPaddingAroundCircle(int padding) {
         mCoachmarkView.setPaddingAroundCircle(padding);
         return this;
     }

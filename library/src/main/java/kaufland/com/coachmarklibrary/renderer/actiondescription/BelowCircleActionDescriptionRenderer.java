@@ -1,14 +1,9 @@
 package kaufland.com.coachmarklibrary.renderer.actiondescription;
 
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
-
-/**
- * Created by sbra0902 on 13.02.17.
- */
 
 public class BelowCircleActionDescriptionRenderer implements ActionDescriptionRenderer {
 
@@ -32,6 +27,6 @@ public class BelowCircleActionDescriptionRenderer implements ActionDescriptionRe
         RectF actionArrowRectangle = layout.calcActionArrowRect();
         RectF screenRectangle = layout.calcScreenRectF();
 
-        return (circleRectangle.bottom + actionDescriptionRectangle.height() + actionArrowRectangle.height()) < screenRectangle.height()  && (actionDescriptionRectangle.width() / 2) < circleRectangle.centerX() && (actionDescriptionRectangle.width() / 2) < (screenRectangle.width() - circleRectangle.centerX());
+        return (circleRectangle.bottom + actionDescriptionRectangle.height() + actionArrowRectangle.height()) < screenRectangle.height() && (actionDescriptionRectangle.width() / 2) < circleRectangle.centerX() && (actionDescriptionRectangle.width() / 2) < (screenRectangle.width() - circleRectangle.centerX());
     }
 }

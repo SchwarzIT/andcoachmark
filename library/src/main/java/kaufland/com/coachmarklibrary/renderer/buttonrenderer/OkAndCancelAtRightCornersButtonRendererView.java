@@ -15,9 +15,7 @@ import org.androidannotations.annotations.ViewById;
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 
-/**
- * Created by sbra0902 on 21.02.17.
- */
+
 @EViewGroup(resName = "ok_cancel_button_view")
 public class OkAndCancelAtRightCornersButtonRendererView extends FrameLayout {
 
@@ -73,7 +71,7 @@ public class OkAndCancelAtRightCornersButtonRendererView extends FrameLayout {
         mGroupCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(clickListener == null || clickListener.onClicked()){
+                if (clickListener == null || clickListener.onClicked()) {
                     mDismissListener.dismiss();
                 }
             }

@@ -1,7 +1,6 @@
 package kaufland.com.coachmarklibrary.renderer.buttonrenderer;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -13,10 +12,6 @@ import android.widget.TextView;
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.R;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
-
-/**
- * Created by sbra0902 on 21.02.17.
- */
 
 public class OkBelowDescriptionButtonRenderer implements ButtonRenderer {
 
@@ -72,7 +67,7 @@ public class OkBelowDescriptionButtonRenderer implements ButtonRenderer {
             @Override
             public void run() {
                 RectF descriptionRectangle = layout.calcDescriptionRect();
-                inflated.setX(descriptionRectangle.centerX() - ((float)inflated.getWidth() / 2));
+                inflated.setX(descriptionRectangle.centerX() - ((float) inflated.getWidth() / 2));
                 inflated.setY(descriptionRectangle.bottom + inflated.getContext().getResources().getDimension(R.dimen.button_padding));
                 inflated.setVisibility(View.VISIBLE);
             }

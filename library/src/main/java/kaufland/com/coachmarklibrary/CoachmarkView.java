@@ -37,9 +37,6 @@ import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
-/**
- * Created by sbra0902 on 01.02.17.
- */
 @EViewGroup(resName = "coachmark_view")
 class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 

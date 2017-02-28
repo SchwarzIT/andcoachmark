@@ -1,8 +1,6 @@
 package kaufland.com.coachmarklibrary.renderer.buttonrenderer;
 
 import android.content.Context;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -10,10 +8,6 @@ import android.widget.FrameLayout;
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.R;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
-
-/**
- * Created by sbra0902 on 21.02.17.
- */
 
 public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
 
@@ -35,11 +29,10 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         }
 
 
-
         inflated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener == null || mListener.onClicked()){
+                if (mListener == null || mListener.onClicked()) {
                     layout.dismiss();
                 }
             }
