@@ -4,6 +4,8 @@ apply plugin: 'maven'
 apply plugin: 'jacoco'
 apply plugin: 'pmd'
 
+group = 'com.github.Kaufland'
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
