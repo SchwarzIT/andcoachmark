@@ -8,7 +8,7 @@ Is a library that provides a highly customizable CoachmarkView
 
 ![](https://picload.org/image/rlrporga/ezgif-2-96da2400cb.gif)
 
-## Feature
+## Features
 
 * The Description Text dynamically renders text on top or bottom.
 * The ActionDescriptionText (Text with arrow to the circle) dynamically renders left/top/bottom/right with this priority.
@@ -19,4 +19,54 @@ Is a library that provides a highly customizable CoachmarkView
 
 ## Implementation
 
-TBD
+
+1. Add it in your root build.gradle at the end of repositories:
+
+	 ```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	```
+
+2. Add gradle dependency
+
+    ```
+    compile 'com.github.kaufland:andcoachmark:1.1.2'
+    ```
+
+3. Configure Coachmark 
+
+	``` java
+	LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+	        
+	View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
+	View description = mInflater.inflate(R.layout.test_description, null);
+
+	OkAndCancelAtRightCornerButtonRenderer buttonRenderer = new OkAndCancelAtRightCornerButtonRenderer.Builder(this)
+         	.withCancelButton("Cancel", new CoachmarkClickListener() {
+                	@Override
+                    	public boolean onClicked() {
+                        	Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                        	//return true to dismiss the coachmark
+                        	return true;
+                    	}
+                	})
+          	.withOkButton("OK", new CoachmarkClickListener() {
+                    	@Override
+                    	public boolean onClicked() {
+                        	Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
+                        	//return true to dismiss the coachmark
+                    	}
+                	})
+          	.build();
+
+	new CoachmarkViewBuilder(MainActivity.this)
+    	.withActionDescription(actionDescription)
+    	.withDescription(description)
+    	.withButtonRenderer(buttonRenderer)
+    	.buildAroundView(clickedView).show();
+	```
+
