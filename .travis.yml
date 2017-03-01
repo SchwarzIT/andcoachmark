@@ -22,7 +22,7 @@ android:
 
 script:
   - android list target
-  - ./gradlew build createDebugCoverageReport
+  - ./gradlew jacocoTestReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
