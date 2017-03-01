@@ -1,12 +1,14 @@
 # andcoachmark
 
 [![Build Status](https://travis-ci.org/Kaufland/andcoachmark.svg?branch=master)](https://travis-ci.org/Kaufland/andcoachmark)
+[![Codecov branch](https://img.shields.io/codecov/c/github/kaufland/andcoachmark/master.svg)]()
 
 Is a library that provides a highly customizable CoachmarkView
 
 ## Demo
 
 ![](https://picload.org/image/rlrporga/ezgif-2-96da2400cb.gif)
+
 
 ## Features
 
