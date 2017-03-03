@@ -1,4 +1,4 @@
-package kaufland.com.coachmarklibrary.renderer;
+package kaufland.com.coachmarklibrary.renderer.actiondescription;
 
 import android.graphics.RectF;
 import android.view.View;
@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
+import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.RightOfCircleActionDescriptionRenderer;
 
 import static org.mockito.Mockito.times;
