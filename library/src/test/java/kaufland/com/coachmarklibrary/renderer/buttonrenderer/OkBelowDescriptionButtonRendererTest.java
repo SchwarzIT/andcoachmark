@@ -100,45 +100,6 @@ public class OkBelowDescriptionButtonRendererTest {
         verify(mMock).setVisibility(View.VISIBLE);
 
 
-
-
-//        TextView mTxtOkBtn = (TextView) inflated.findViewById(R.id.txt_ok_btn);
-//        LinearLayout mGroupOk = (LinearLayout) inflated.findViewById(R.id.group_ok);
-//
-//        mTxtOkBtn.setText(mOkText);
-//        mGroupOk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mListener == null || mListener.onClicked()) {
-//                    layout.dismiss();
-//                }
-//            }
-//        });
-//
-//        if (mBorder != 0) {
-//            GradientDrawable gradientDrawable = new GradientDrawable();
-//            gradientDrawable.setStroke(mBorder, mColor != null ? mColor : layout.getContext().getColor(R.color.default_border_color));
-//            mGroupOk.setBackground(gradientDrawable);
-//
-//        }
-//
-//        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-//        inflated.setLayoutParams(params);
-//
-//
-//        inflated.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                RectF descriptionRectangle = layout.calcDescriptionRect();
-//                inflated.setX(descriptionRectangle.centerX() - ((float) inflated.getWidth() / 2));
-//                inflated.setY(descriptionRectangle.bottom + inflated.getContext().getResources().getDimension(R.dimen.button_padding));
-//                inflated.setVisibility(View.VISIBLE);
-//            }
-//        });
-
-
-
-
     }
 
 }
