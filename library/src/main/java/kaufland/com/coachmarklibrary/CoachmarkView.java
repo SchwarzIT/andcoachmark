@@ -27,6 +27,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
 import org.androidannotations.annotations.res.DimensionPixelSizeRes;
 
+import kaufland.com.coachmarklibrary.animator.Animator;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActionDescriptionRenderer;
@@ -40,22 +41,16 @@ import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescription
 @EViewGroup(resName = "coachmark_view")
 class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
-    @SystemService
-    WindowManager mWindowManager;
-
-    @ViewById(resName = "circle")
-    FrameLayout mFrame;
-
-    @ViewById(resName = "iv_action_arrow")
-    ImageView mIvActionArrow;
-
     @DimensionPixelSizeRes(resName = "default_margin_circle")
     protected int marginArroundCircle;
-
     @ColorRes(resName = "default_backcolor")
     protected int defaultBackColor;
-
-
+    @SystemService
+    WindowManager mWindowManager;
+    @ViewById(resName = "circle")
+    FrameLayout mFrame;
+    @ViewById(resName = "iv_action_arrow")
+    ImageView mIvActionArrow;
     private Bitmap bitmap;
 
     private View view;
@@ -63,6 +58,7 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private int windowHeight;
 
     private View mActionDescription;
+
     private View mDescription;
 
 
@@ -76,6 +72,11 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private DescriptionRenderer mDescriptionRenderer = new TopOrBottomDescriptionRenderer();
 
     private ButtonRenderer mButtonRenderer;
+
+    private Animator mCoachmarkAnimator;
+
+
+    private boolean mRenderViewsBeforeAnimation;
 
 
     public CoachmarkView(Context context) {
@@ -120,18 +121,21 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
             if (mDescription != null) {
                 mDescriptionRenderer.render(this, mDescription);
-                mDescription.setVisibility(VISIBLE);
+                mDescription.setVisibility(mRenderViewsBeforeAnimation ? VISIBLE : GONE);
             }
 
 
             if (mActionDescription != null && mActionDescriptionRenderer != null) {
                 renderActionDescription();
-                mActionDescription.setVisibility(VISIBLE);
+                mActionDescription.setVisibility(mRenderViewsBeforeAnimation ? VISIBLE : GONE);
             }
 
             if (mButtonRenderer != null) {
                 mButtonRenderer.render(CoachmarkView.this);
+                mButtonRenderer.makeButtonsVisible(mRenderViewsBeforeAnimation);
             }
+
+            mIvActionArrow.setVisibility(mRenderViewsBeforeAnimation?View.VISIBLE:View.GONE);
 
             RectF circle = calcCircleRectF();
 
@@ -170,6 +174,16 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
                 return;
             }
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        WindowManager.LayoutParams params = (WindowManager.LayoutParams) getLayoutParams();
+        params.horizontalMargin = -1000;
+        params.verticalMargin = -1000;
+        setLayoutParams(params);
+
     }
 
     @NonNull
@@ -240,6 +254,14 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mDescriptionRenderer = descriptionRenderer;
     }
 
+    public void setAnimator(Animator animator) {
+        mCoachmarkAnimator = animator;
+    }
+
+    public void shouldRenderViewsBeforeAnimation(boolean renderViewsBeforeAnimation) {
+        mRenderViewsBeforeAnimation = renderViewsBeforeAnimation;
+    }
+
     public void setView(View view) {
         this.view = view;
         bitmap = null;
@@ -256,6 +278,15 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     public void setPaddingAroundCircle(int paddingAroundCircle) {
         this.marginArroundCircle = paddingAroundCircle;
     }
+
+    public boolean isRenderingViewsBeforeAnimation() {
+        return mRenderViewsBeforeAnimation;
+    }
+
+    public void setRenderingViewsBeforeAnimation(boolean mRenderViewsBeforeAnimation) {
+        this.mRenderViewsBeforeAnimation = mRenderViewsBeforeAnimation;
+    }
+
 
     @Override
     public void dismiss() {

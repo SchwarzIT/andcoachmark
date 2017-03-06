@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         mRecyclerView.setAdapter(mAdapter);
     }
 
+
     @Override
     public void onClick(View view) {
         setupCoachmark(view);
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(new DismissOnTouchNoButtonRenderer.Builder().build())
+                .withRenderingBeforeAnimation(true)
                 .buildAroundView(clickedView).show();
     }
 
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(new OkBelowDescriptionButtonRenderer.Builder().withBorder(4, null).withOkButton("Ok", null).build())
+                .withRenderingBeforeAnimation(true)
                 .buildAroundView(clickedView).show();
     }
 
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(buttonRenderer)
+                .withRenderingBeforeAnimation(true)
                 .buildAroundView(clickedView).show();
 
     }

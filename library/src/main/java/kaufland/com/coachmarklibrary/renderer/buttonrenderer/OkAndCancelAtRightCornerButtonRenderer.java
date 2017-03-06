@@ -1,6 +1,7 @@
 package kaufland.com.coachmarklibrary.renderer.buttonrenderer;
 
 import android.content.Context;
+import android.view.View;
 
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
@@ -22,6 +23,11 @@ public class OkAndCancelAtRightCornerButtonRenderer implements ButtonRenderer {
             layout.addView(mView);
         }
 
+    }
+
+    @Override
+    public void makeButtonsVisible(boolean visible) {
+        mView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public static class Builder {

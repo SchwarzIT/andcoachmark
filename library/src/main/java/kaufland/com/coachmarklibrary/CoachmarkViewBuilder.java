@@ -56,4 +56,9 @@ public class CoachmarkViewBuilder {
         return this;
     }
 
+    public CoachmarkViewBuilder withRenderingBeforeAnimation(boolean value){
+        mCoachmarkView.setRenderingViewsBeforeAnimation(value);
+        return this;
+    }
+
 }

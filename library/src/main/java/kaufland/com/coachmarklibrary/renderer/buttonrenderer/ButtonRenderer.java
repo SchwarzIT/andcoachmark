@@ -5,4 +5,6 @@ import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 public interface ButtonRenderer {
 
     void render(CoachmarkViewLayout layout);
+
+    void makeButtonsVisible(boolean visible);
 }
