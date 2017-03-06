@@ -17,7 +17,7 @@ import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 
 
 @EViewGroup(resName = "ok_cancel_button_view")
-public class OkAndCancelAtRightCornersButtonRendererView extends FrameLayout {
+public class OkAndCancelAtRightCornerButtonRendererView extends FrameLayout {
 
     @ViewById(resName = "txt_ok_btn")
     TextView mTxtOkBtn;
@@ -33,20 +33,20 @@ public class OkAndCancelAtRightCornersButtonRendererView extends FrameLayout {
 
     private CoachmarkViewLayout mDismissListener;
 
-    public OkAndCancelAtRightCornersButtonRendererView(Context context) {
+    public OkAndCancelAtRightCornerButtonRendererView(Context context) {
         super(context);
     }
 
-    public OkAndCancelAtRightCornersButtonRendererView(Context context, AttributeSet attrs) {
+    public OkAndCancelAtRightCornerButtonRendererView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public OkAndCancelAtRightCornersButtonRendererView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public OkAndCancelAtRightCornerButtonRendererView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public OkAndCancelAtRightCornersButtonRendererView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OkAndCancelAtRightCornerButtonRendererView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

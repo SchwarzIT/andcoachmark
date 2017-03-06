@@ -8,9 +8,9 @@ import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 
 public class OkAndCancelAtRightCornerButtonRenderer implements ButtonRenderer {
 
-    private OkAndCancelAtRightCornersButtonRendererView mView;
+    private OkAndCancelAtRightCornerButtonRendererView mView;
 
-    private OkAndCancelAtRightCornerButtonRenderer(OkAndCancelAtRightCornersButtonRendererView view) {
+    private OkAndCancelAtRightCornerButtonRenderer(OkAndCancelAtRightCornerButtonRendererView view) {
         mView = view;
     }
 
