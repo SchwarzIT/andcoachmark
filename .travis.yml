@@ -22,7 +22,10 @@ android:
 
 script:
   - android list target
-  - ./gradlew build check test
+  - ./gradlew jacocoTestReport
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 before_install:
 - chmod +x gradlew

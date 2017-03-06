@@ -22,9 +22,17 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
     }
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
 }
 
@@ -52,21 +60,20 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.2.0'
 }
 
+task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest', group: 'verification') {
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "https://maven-repository.kaufland/nexus/content/repositories/kis-apps-ios-release-local") {
-                authentication(userName: "t-nexus-mobile", password: "Hoschie!")
-            }
-            snapshotRepository(url: "https://maven-repository.kaufland/nexus/content/repositories/kis-apps-ios-snapshot-local") {
-                authentication(userName: "t-nexus-mobile", password: "Hoschie!")
-            }
-            pom.version = "1.0.0"
-            pom.artifactId = "coachmarklibrary"
-            pom.groupId = "com.kaufland.android"
-        }
+    reports {
+        xml.enabled = true
+        html.enabled = false
     }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 }
 
 dependencies {

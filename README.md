@@ -1,12 +1,16 @@
 # andcoachmark
 
 [![Build Status](https://travis-ci.org/Kaufland/andcoachmark.svg?branch=master)](https://travis-ci.org/Kaufland/andcoachmark)
+[![codecov](https://codecov.io/gh/Kaufland/andcoachmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Kaufland/andcoachmark)
+![KIS](https://img.shields.io/badge/KIS-awesome-red.svg?link=http://www.spannende-it.de&link=http://www.spannende-it.de)
+
 
 Is a library that provides a highly customizable CoachmarkView
 
 ## Demo
 
 ![](https://picload.org/image/rlrporga/ezgif-2-96da2400cb.gif)
+
 
 ## Features
 
