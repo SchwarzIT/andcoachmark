@@ -76,23 +76,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest', group:
     executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 }
 
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "https://maven-repository.kaufland/nexus/content/repositories/kis-apps-ios-release-local") {
-                authentication(userName: "t-nexus-mobile", password: "Hoschie!")
-            }
-            snapshotRepository(url: "https://maven-repository.kaufland/nexus/content/repositories/kis-apps-ios-snapshot-local") {
-                authentication(userName: "t-nexus-mobile", password: "Hoschie!")
-            }
-            pom.version = "1.0.0"
-            pom.artifactId = "coachmarklibrary"
-            pom.groupId = "com.kaufland.android"
-        }
-    }
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
