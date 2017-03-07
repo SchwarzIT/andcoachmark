@@ -3,6 +3,7 @@
 buildscript {
     ext {
         androidSupportVersion = '25.0.1'
+        androidBuildToolsVersion = '25.0.1'
         jUnitVersion = '4.12'
     }
     repositories {
