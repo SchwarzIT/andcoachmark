@@ -1,10 +1,7 @@
 package kaufland.com.coachmarklibrary.renderer.buttonrenderer;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.FrameLayout;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -28,7 +25,7 @@ public class OkAndCancelAtRightCornerButtonRendererTest {
 
         CoachmarkClickListener clickMock = Mockito.mock(CoachmarkClickListener.class);
 
-        OkAndCancelAtRightCornersButtonRendererView viewMock = Mockito.mock(OkAndCancelAtRightCornersButtonRendererView.class);
+        OkAndCancelAtRightCornerButtonRendererView viewMock = Mockito.mock(OkAndCancelAtRightCornerButtonRendererView.class);
 
         ReflectionUtil.fieldSet(OkAndCancelAtRightCornerButtonRenderer.class, mBuilder.build(), "mView", viewMock);
 
@@ -48,7 +45,7 @@ public class OkAndCancelAtRightCornerButtonRendererTest {
         OkAndCancelAtRightCornerButtonRenderer renderer = mBuilder.build();
 
 
-        OkAndCancelAtRightCornersButtonRendererView viewMock = Mockito.mock(OkAndCancelAtRightCornersButtonRendererView.class);
+        OkAndCancelAtRightCornerButtonRendererView viewMock = Mockito.mock(OkAndCancelAtRightCornerButtonRendererView.class);
 
         ReflectionUtil.fieldSet(OkAndCancelAtRightCornerButtonRenderer.class, renderer, "mView", viewMock);
 
