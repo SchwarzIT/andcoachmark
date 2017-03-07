@@ -76,11 +76,6 @@ public class OkBelowDescriptionButtonRenderer implements ButtonRenderer {
 
     }
 
-    @Override
-    public void makeButtonsVisible(boolean visible) {
-        inflated.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
-
     public static class Builder {
 
         private OkBelowDescriptionButtonRenderer renderer;

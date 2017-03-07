@@ -25,10 +25,6 @@ public class OkAndCancelAtRightCornerButtonRenderer implements ButtonRenderer {
 
     }
 
-    @Override
-    public void makeButtonsVisible(boolean visible) {
-        mView.setVisibility(visible ? View.VISIBLE : View.GONE);
-    }
 
     public static class Builder {
 

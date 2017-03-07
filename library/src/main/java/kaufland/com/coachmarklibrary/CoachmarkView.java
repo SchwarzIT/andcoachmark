@@ -27,7 +27,6 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
 import org.androidannotations.annotations.res.DimensionPixelSizeRes;
 
-import kaufland.com.coachmarklibrary.animator.Animator;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActionDescriptionRenderer;
@@ -73,10 +72,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
     private ButtonRenderer mButtonRenderer;
 
-    private Animator mCoachmarkAnimator;
-
-
-    private boolean mRenderViewsBeforeAnimation;
 
 
     public CoachmarkView(Context context) {
@@ -121,21 +116,20 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
             if (mDescription != null) {
                 mDescriptionRenderer.render(this, mDescription);
-                mDescription.setVisibility(mRenderViewsBeforeAnimation ? VISIBLE : GONE);
+                mDescription.setVisibility(VISIBLE);
             }
 
 
             if (mActionDescription != null && mActionDescriptionRenderer != null) {
                 renderActionDescription();
-                mActionDescription.setVisibility(mRenderViewsBeforeAnimation ? VISIBLE : GONE);
+                mActionDescription.setVisibility(VISIBLE);
             }
 
             if (mButtonRenderer != null) {
                 mButtonRenderer.render(CoachmarkView.this);
-                mButtonRenderer.makeButtonsVisible(mRenderViewsBeforeAnimation);
             }
 
-            mIvActionArrow.setVisibility(mRenderViewsBeforeAnimation?View.VISIBLE:View.GONE);
+            mIvActionArrow.setVisibility(VISIBLE);
 
             RectF circle = calcCircleRectF();
 
@@ -254,14 +248,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mDescriptionRenderer = descriptionRenderer;
     }
 
-    public void setAnimator(Animator animator) {
-        mCoachmarkAnimator = animator;
-    }
-
-    public void shouldRenderViewsBeforeAnimation(boolean renderViewsBeforeAnimation) {
-        mRenderViewsBeforeAnimation = renderViewsBeforeAnimation;
-    }
-
     public void setView(View view) {
         this.view = view;
         bitmap = null;
@@ -279,13 +265,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         this.marginArroundCircle = paddingAroundCircle;
     }
 
-    public boolean isRenderingViewsBeforeAnimation() {
-        return mRenderViewsBeforeAnimation;
-    }
-
-    public void setRenderingViewsBeforeAnimation(boolean mRenderViewsBeforeAnimation) {
-        this.mRenderViewsBeforeAnimation = mRenderViewsBeforeAnimation;
-    }
 
 
     @Override

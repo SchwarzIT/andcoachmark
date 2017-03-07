@@ -1,8 +1,9 @@
-package kaufland.com.coachmarklibrary.renderer.buttonrenderer;
+package kaufland.com.coachmarklibrary.renderer.coachmark;
+
 
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 
-public interface ButtonRenderer {
+public interface CoachmarkRenderer {
 
     void render(CoachmarkViewLayout layout);
 }
