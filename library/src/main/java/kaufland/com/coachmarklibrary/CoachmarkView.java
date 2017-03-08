@@ -34,6 +34,7 @@ import kaufland.com.coachmarklibrary.renderer.actiondescription.LeftOfCircleActi
 import kaufland.com.coachmarklibrary.renderer.actiondescription.RightOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.TopOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.circlerenderer.CircleRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
@@ -61,6 +62,11 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private View mDescription;
 
 
+    private int windowHorizontalMargin;
+
+    private int windowVerticalMargin;
+
+
     private ActionDescriptionRenderer[] mActionDescriptionRenderer = new ActionDescriptionRenderer[]{
             new LeftOfCircleActionDescriptionRenderer(),
             new TopOfCircleActionDescriptionRenderer(),
@@ -71,6 +77,8 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private DescriptionRenderer mDescriptionRenderer = new TopOrBottomDescriptionRenderer();
 
     private ButtonRenderer mButtonRenderer;
+
+    private CircleRenderer mCircleRenderer;
 
 
 
@@ -174,8 +182,8 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         WindowManager.LayoutParams params = (WindowManager.LayoutParams) getLayoutParams();
-        params.horizontalMargin = -1000;
-        params.verticalMargin = -1000;
+        params.horizontalMargin = windowHorizontalMargin;
+        params.verticalMargin = windowVerticalMargin;
         setLayoutParams(params);
 
     }
@@ -270,5 +278,13 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     @Override
     public void dismiss() {
         mWindowManager.removeView(CoachmarkView.this);
+    }
+
+    public void setWindowHorizontalMargin(int windowHorizontalMargin) {
+        this.windowHorizontalMargin = windowHorizontalMargin;
+    }
+
+    public void setWindowVerticalMargin(int windowVerticalMargin) {
+        this.windowVerticalMargin = windowVerticalMargin;
     }
 }
