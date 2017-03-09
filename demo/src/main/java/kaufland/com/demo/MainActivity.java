@@ -14,6 +14,7 @@ import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.circle.WholeScreenCircleRenderer;
 
 public class MainActivity extends AppCompatActivity implements DemoClickListener {
 
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .build();
 
         new CoachmarkViewBuilder(MainActivity.this)
+                .withCircleRenderer(new WholeScreenCircleRenderer(this))
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(buttonRenderer)

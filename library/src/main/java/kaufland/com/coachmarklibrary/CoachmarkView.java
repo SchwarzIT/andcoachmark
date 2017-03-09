@@ -33,8 +33,10 @@ import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActio
 import kaufland.com.coachmarklibrary.renderer.actiondescription.LeftOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.RightOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.TopOfCircleActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.animation.AnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
-import kaufland.com.coachmarklibrary.renderer.circlerenderer.CircleRenderer;
+import kaufland.com.coachmarklibrary.renderer.circle.CircleRenderer;
+import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
@@ -61,6 +63,8 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
     private View mDescription;
 
+    private CircleView mCircleView;
+
 
     private int windowHorizontalMargin;
 
@@ -79,6 +83,8 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private ButtonRenderer mButtonRenderer;
 
     private CircleRenderer mCircleRenderer;
+
+    private AnimationRenderer mAnimationRenderer;
 
 
 
@@ -122,31 +128,47 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
         if (view != null) {
 
+            if(mCircleRenderer==null){
+
+                renderDefaultCircle(osCanvas,paint);
+
+            }else{
+                mCircleView=mCircleRenderer.render(this);
+            }
+
             if (mDescription != null) {
+
                 mDescriptionRenderer.render(this, mDescription);
                 mDescription.setVisibility(VISIBLE);
+
             }
 
 
             if (mActionDescription != null && mActionDescriptionRenderer != null) {
+
                 renderActionDescription();
                 mActionDescription.setVisibility(VISIBLE);
+
             }
 
             if (mButtonRenderer != null) {
+
                 mButtonRenderer.render(CoachmarkView.this);
+
             }
 
             mIvActionArrow.setVisibility(VISIBLE);
-
-            RectF circle = calcCircleRectF();
-
-            osCanvas.drawCircle(circle.centerX(), circle.centerY(), circle.width() / 2, paint);
         }
 
     }
 
-    public void show() {
+    private void renderDefaultCircle(Canvas c,Paint paint){
+        RectF circle = calcCircleRectF();
+
+        c.drawCircle(circle.centerX(), circle.centerY(), circle.width() / 2, paint);
+    }
+
+    public CoachmarkView show() {
         DisplayMetrics metrics = new DisplayMetrics();
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
 
@@ -165,6 +187,7 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
         mWindowManager.addView(this, mWindowParams);
         requestLayout();
+        return this;
     }
 
 
@@ -256,6 +279,10 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mDescriptionRenderer = descriptionRenderer;
     }
 
+    public void setCircleRenderer(CircleRenderer circleRenderer){
+        mCircleRenderer=circleRenderer;
+    }
+
     public void setView(View view) {
         this.view = view;
         bitmap = null;
@@ -273,13 +300,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         this.marginArroundCircle = paddingAroundCircle;
     }
 
-
-
-    @Override
-    public void dismiss() {
-        mWindowManager.removeView(CoachmarkView.this);
-    }
-
     public void setWindowHorizontalMargin(int windowHorizontalMargin) {
         this.windowHorizontalMargin = windowHorizontalMargin;
     }
@@ -287,4 +307,19 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     public void setWindowVerticalMargin(int windowVerticalMargin) {
         this.windowVerticalMargin = windowVerticalMargin;
     }
+
+    public CircleView getCircleView() {
+        return mCircleView;
+    }
+
+    public void setCircleView(CircleView mCircleView) {
+        this.mCircleView = mCircleView;
+    }
+
+    @Override
+    public void dismiss() {
+        mWindowManager.removeView(CoachmarkView.this);
+    }
+
+
 }

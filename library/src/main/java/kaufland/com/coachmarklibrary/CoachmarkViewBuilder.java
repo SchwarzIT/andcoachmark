@@ -6,6 +6,7 @@ import android.view.View;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.circle.CircleRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 
 public class CoachmarkViewBuilder {
@@ -38,6 +39,11 @@ public class CoachmarkViewBuilder {
 
     public CoachmarkViewBuilder withDescriptionRenderer(DescriptionRenderer renderer) {
         mCoachmarkView.setDescriptionRenderer(renderer);
+        return this;
+    }
+
+    public CoachmarkViewBuilder withCircleRenderer(CircleRenderer renderer){
+        mCoachmarkView.setCircleRenderer(renderer);
         return this;
     }
 
