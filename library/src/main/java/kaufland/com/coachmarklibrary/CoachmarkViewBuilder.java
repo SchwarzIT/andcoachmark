@@ -62,14 +62,4 @@ public class CoachmarkViewBuilder {
         return this;
     }
 
-    public CoachmarkViewBuilder withWindowHorizontalMargin(int margin){
-        mCoachmarkView.setWindowHorizontalMargin(margin);
-        return this;
-    }
-
-    public CoachmarkViewBuilder withWindowVerticalMargin(int margin){
-        mCoachmarkView.setWindowVerticalMargin(margin);
-        return this;
-    }
-
 }

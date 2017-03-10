@@ -67,11 +67,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private CircleView mCircleView;
 
 
-    private int windowHorizontalMargin;
-
-    private int windowVerticalMargin;
-
-
     private ActionDescriptionRenderer[] mActionDescriptionRenderer = new ActionDescriptionRenderer[]{
             new LeftOfCircleActionDescriptionRenderer(),
             new TopOfCircleActionDescriptionRenderer(),
@@ -199,16 +194,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        WindowManager.LayoutParams params = (WindowManager.LayoutParams) getLayoutParams();
-        params.horizontalMargin = windowHorizontalMargin;
-        params.verticalMargin = windowVerticalMargin;
-        setLayoutParams(params);
-
-    }
-
     @NonNull
     public RectF calcActionArrowRect() {
         return new RectF(mIvActionArrow.getX(), mIvActionArrow.getY(), mIvActionArrow.getX() + mIvActionArrow.getWidth(), mIvActionArrow.getY() + mIvActionArrow.getHeight());
@@ -296,14 +281,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
     public void setPaddingAroundCircle(int paddingAroundCircle) {
         this.marginArroundCircle = paddingAroundCircle;
-    }
-
-    public void setWindowHorizontalMargin(int windowHorizontalMargin) {
-        this.windowHorizontalMargin = windowHorizontalMargin;
-    }
-
-    public void setWindowVerticalMargin(int windowVerticalMargin) {
-        this.windowVerticalMargin = windowVerticalMargin;
     }
 
     public CircleView getCircleView() {
