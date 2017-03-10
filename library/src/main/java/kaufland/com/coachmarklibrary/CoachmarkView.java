@@ -37,6 +37,7 @@ import kaufland.com.coachmarklibrary.renderer.animation.AnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleRenderer;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
+import kaufland.com.coachmarklibrary.renderer.circle.DefaultCircleRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
@@ -90,20 +91,27 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
     public CoachmarkView(Context context) {
         super(context);
+        initDefaultCircleRenderer(context);
     }
 
     public CoachmarkView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initDefaultCircleRenderer(context);
     }
 
     public CoachmarkView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initDefaultCircleRenderer(context);
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public CoachmarkView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        initDefaultCircleRenderer(context);
+    }
+
+    private void initDefaultCircleRenderer(Context context){
+        mCircleRenderer = new DefaultCircleRenderer(context);
     }
 
     @Override
@@ -128,12 +136,8 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
         if (view != null) {
 
-            if(mCircleRenderer==null){
-
-                renderDefaultCircle(osCanvas,paint);
-
-            }else{
-                mCircleView=mCircleRenderer.render(this);
+            if(mCircleRenderer!=null){
+                mCircleRenderer.render(this);
             }
 
             if (mDescription != null) {
@@ -160,12 +164,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
             mIvActionArrow.setVisibility(VISIBLE);
         }
 
-    }
-
-    private void renderDefaultCircle(Canvas c,Paint paint){
-        RectF circle = calcCircleRectF();
-
-        c.drawCircle(circle.centerX(), circle.centerY(), circle.width() / 2, paint);
     }
 
     public CoachmarkView show() {

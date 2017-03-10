@@ -46,7 +46,7 @@ public class CircleView extends FrameLayout {
             Paint paint = new Paint();
             paint.setColor(defaultColor);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-            canvas.drawCircle(clickedViewRectF.centerX(), clickedViewRectF.centerY(),startRectF.height(),paint);
+            canvas.drawCircle(clickedViewRectF.centerX(), clickedViewRectF.centerY(),startRectF.width()/2,paint);
         }
         super.dispatchDraw(canvas);
     }

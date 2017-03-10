@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .build();
 
         new CoachmarkViewBuilder(MainActivity.this)
-                .withCircleRenderer(new WholeScreenCircleRenderer(this))
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(buttonRenderer)
