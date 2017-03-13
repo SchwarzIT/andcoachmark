@@ -8,7 +8,9 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Region;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -42,7 +44,7 @@ import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
 @EViewGroup(resName = "coachmark_view")
-class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
+public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
     @DimensionPixelSizeRes(resName = "default_margin_circle")
     protected int marginArroundCircle;
@@ -63,6 +65,8 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private View mActionDescription;
 
     private View mDescription;
+
+    private View mButtonsView;
 
     private CircleView mCircleView;
 
@@ -114,7 +118,7 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         if (bitmap == null) {
             createWindowFrame();
         }
-        canvas.drawBitmap(bitmap, 0, 0, null);
+        canvas.drawBitmap(bitmap,0,0, null);
         super.dispatchDraw(canvas);
     }
 
@@ -132,7 +136,7 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         if (view != null) {
 
             if(mCircleRenderer!=null){
-                mCircleRenderer.render(this);
+                mCircleView=mCircleRenderer.render(this);
             }
 
             if (mDescription != null) {
@@ -152,11 +156,19 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
             if (mButtonRenderer != null) {
 
-                mButtonRenderer.render(CoachmarkView.this);
+               mButtonsView=mButtonRenderer.render(CoachmarkView.this);
 
             }
 
-            mIvActionArrow.setVisibility(VISIBLE);
+            if(mAnimationRenderer!=null){
+
+                if(mAnimationRenderer.isAnimationBeforeRendering()){
+                    hideAllActionViews();
+                }else {
+                    showAllActionViews();
+                }
+                mAnimationRenderer.animate(this);
+            }
         }
 
     }
@@ -173,9 +185,10 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mWindowParams.y = 0;
         mWindowParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_ATTACHED_IN_DECOR;
+        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
-        mWindowParams.windowAnimations = 0;
+        mWindowParams.verticalMargin=1000;
+        mWindowParams.horizontalMargin=1000;
 
 
         mWindowManager.addView(this, mWindowParams);
@@ -291,10 +304,28 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         this.mCircleView = mCircleView;
     }
 
+
+    public void hideAllActionViews(){
+        mActionDescription.setVisibility(View.GONE);
+        mDescription.setVisibility(View.GONE);
+        mButtonsView.setVisibility(View.GONE);
+        mIvActionArrow.setVisibility(View.GONE);
+    }
+
+    public void showAllActionViews(){
+        mActionDescription.setVisibility(View.VISIBLE);
+        mDescription.setVisibility(View.VISIBLE);
+        mButtonsView.setVisibility(View.VISIBLE);
+        mIvActionArrow.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void dismiss() {
         mWindowManager.removeView(CoachmarkView.this);
     }
 
 
+    public void setAnimationRenderer(AnimationRenderer animationRenderer) {
+        mAnimationRenderer = animationRenderer;
+    }
 }

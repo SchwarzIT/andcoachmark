@@ -1,10 +1,11 @@
 package kaufland.com.coachmarklibrary.renderer.animation;
 
 
-import android.view.View;
-import android.view.animation.Animation;
+import kaufland.com.coachmarklibrary.CoachmarkView;
 
 public interface AnimationRenderer {
 
-    void animate(View view, Animation animation);
+    void animate(CoachmarkView coachmarkView);
+
+    boolean isAnimationBeforeRendering();
 }

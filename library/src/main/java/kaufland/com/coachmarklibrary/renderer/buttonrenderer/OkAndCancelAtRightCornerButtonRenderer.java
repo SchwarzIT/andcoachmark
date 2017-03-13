@@ -16,12 +16,14 @@ public class OkAndCancelAtRightCornerButtonRenderer implements ButtonRenderer {
     }
 
     @Override
-    public void render(final CoachmarkViewLayout layout) {
+    public View render(final CoachmarkViewLayout layout) {
         mView.setDismissListener(layout);
 
         if (mView.getParent() == null) {
             layout.addView(mView);
         }
+
+        return mView;
 
     }
 
