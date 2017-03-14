@@ -109,7 +109,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         if (bitmap == null) {
             createWindowFrame();
         }
-        canvas.drawBitmap(bitmap, 0, 0, null);
+        canvas.drawBitmap(bitmap,null,calcScreenRectF(), null);
         super.dispatchDraw(canvas);
     }
 

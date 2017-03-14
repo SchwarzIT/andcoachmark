@@ -48,18 +48,11 @@ public class CircleView extends FrameLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        Log.d("Dispatch draw","Dispatch draw");
         Paint paint = new Paint();
         paint.setColor(defaultColor);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-        canvas.drawCircle(mCenterX, mCenterY, mRadius,paint);
+        canvas.drawCircle(mCenterX, mCenterY, mRadius, paint);
         super.dispatchDraw(canvas);
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        Log.d("On draw","On draw");
-        super.onDraw(canvas);
     }
 
     public float getCenterX() {
