@@ -126,7 +126,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas osCanvas = new Canvas(bitmap);
 
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Paint paint = new Paint();
         paint.setColor(defaultBackColor);
         osCanvas.drawRect(calcScreenRectF(), paint);
 
@@ -162,11 +162,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
             if(mAnimationRenderer!=null){
 
-                if(mAnimationRenderer.isAnimationBeforeRendering()){
-                    hideAllActionViews();
-                }else {
-                    showAllActionViews();
-                }
                 mAnimationRenderer.animate(this);
             }
         }

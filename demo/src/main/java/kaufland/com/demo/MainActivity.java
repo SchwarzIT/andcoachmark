@@ -7,19 +7,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.CoachmarkView;
 import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
-import kaufland.com.coachmarklibrary.renderer.animation.ConcentricCircleAnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
-import kaufland.com.coachmarklibrary.renderer.circle.WholeScreenCircleRenderer;
 
 public class MainActivity extends AppCompatActivity implements DemoClickListener {
 
@@ -115,11 +110,9 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .build();
 
         CoachmarkView mCoachmarkView = new CoachmarkViewBuilder(MainActivity.this)
-                .withCircleRenderer(new WholeScreenCircleRenderer(MainActivity.this))
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(buttonRenderer)
-                .withAnimationRenderer(new ConcentricCircleAnimationRenderer())
                 .buildAroundView(clickedView).show();
 
     }

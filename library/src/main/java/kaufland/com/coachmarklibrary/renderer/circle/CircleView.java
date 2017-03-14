@@ -11,7 +11,6 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import org.androidannotations.annotations.EViewGroup;
@@ -19,8 +18,11 @@ import org.androidannotations.annotations.EViewGroup;
 @EViewGroup(resName = "circle_view")
 public class CircleView extends FrameLayout {
 
-    private RectF startRectF;
-    private RectF clickedViewRectF;
+    private float mCenterX;
+
+    private float mCenterY;
+
+    private float mRadius;
 
     private int defaultColor = Color.TRANSPARENT;
 
@@ -41,31 +43,38 @@ public class CircleView extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        if(startRectF!=null && clickedViewRectF !=null){
             Paint paint = new Paint();
             paint.setColor(defaultColor);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-            canvas.drawCircle(clickedViewRectF.centerX(), clickedViewRectF.centerY(),startRectF.width()/2,paint);
-        }
+            canvas.drawCircle(mCenterX, mCenterY, mRadius,paint);
         super.dispatchDraw(canvas);
     }
 
-    public void setStartRectF(RectF startRectF) {
-        this.startRectF = startRectF;
+    public float getCenterX() {
+        return mCenterX;
     }
 
-    public void setClickedViewRectF(RectF clickedViewRectF) {
-        this.clickedViewRectF = clickedViewRectF;
+    public void setCenterX(float mCenterX) {
+        this.mCenterX = mCenterX;
     }
 
-    public RectF getStartRectF() {
-        return startRectF;
+    public float getCenterY() {
+        return mCenterY;
     }
 
-    public RectF getClickedViewRectF() {
-        return clickedViewRectF;
+    public void setCenterY(float mCenterY) {
+        this.mCenterY = mCenterY;
+    }
+
+    public float getRadius() {
+        return mRadius;
+    }
+
+    public void setRadius(float mRadius) {
+        this.mRadius = mRadius;
     }
 
     public void setColor(int color){
