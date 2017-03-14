@@ -87,30 +87,21 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private AnimationRenderer mAnimationRenderer;
 
 
-
     public CoachmarkView(Context context) {
         super(context);
-        initDefaultCircleRenderer(context);
     }
 
     public CoachmarkView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initDefaultCircleRenderer(context);
     }
 
     public CoachmarkView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initDefaultCircleRenderer(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public CoachmarkView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        initDefaultCircleRenderer(context);
-    }
-
-    private void initDefaultCircleRenderer(Context context){
-        mCircleRenderer = new DefaultCircleRenderer(context);
     }
 
     @Override
@@ -118,7 +109,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         if (bitmap == null) {
             createWindowFrame();
         }
-        canvas.drawBitmap(bitmap,0,0, null);
+        canvas.drawBitmap(bitmap, 0, 0, null);
         super.dispatchDraw(canvas);
     }
 
@@ -135,9 +126,10 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
         if (view != null) {
 
-            if(mCircleRenderer!=null){
-                mCircleView=mCircleRenderer.render(this);
+            if (mCircleRenderer == null) {
+                mCircleRenderer = new DefaultCircleRenderer(getContext());
             }
+            mCircleView = mCircleRenderer.render(this);
 
             if (mDescription != null) {
 
@@ -156,11 +148,11 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
             if (mButtonRenderer != null) {
 
-               mButtonsView=mButtonRenderer.render(CoachmarkView.this);
+                mButtonsView = mButtonRenderer.render(CoachmarkView.this);
 
             }
 
-            if(mAnimationRenderer!=null){
+            if (mAnimationRenderer != null) {
 
                 mAnimationRenderer.animate(this);
             }
@@ -182,8 +174,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
-        mWindowParams.verticalMargin=1000;
-        mWindowParams.horizontalMargin=1000;
 
 
         mWindowManager.addView(this, mWindowParams);
@@ -270,8 +260,8 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mDescriptionRenderer = descriptionRenderer;
     }
 
-    public void setCircleRenderer(CircleRenderer circleRenderer){
-        mCircleRenderer=circleRenderer;
+    public void setCircleRenderer(CircleRenderer circleRenderer) {
+        mCircleRenderer = circleRenderer;
     }
 
     public void setView(View view) {
@@ -295,19 +285,15 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         return mCircleView;
     }
 
-    public void setCircleView(CircleView mCircleView) {
-        this.mCircleView = mCircleView;
-    }
 
-
-    public void hideAllActionViews(){
+    public void hideAllActionViews() {
         mActionDescription.setVisibility(View.GONE);
         mDescription.setVisibility(View.GONE);
         mButtonsView.setVisibility(View.GONE);
         mIvActionArrow.setVisibility(View.GONE);
     }
 
-    public void showAllActionViews(){
+    public void showAllActionViews() {
         mActionDescription.setVisibility(View.VISIBLE);
         mDescription.setVisibility(View.VISIBLE);
         mButtonsView.setVisibility(View.VISIBLE);

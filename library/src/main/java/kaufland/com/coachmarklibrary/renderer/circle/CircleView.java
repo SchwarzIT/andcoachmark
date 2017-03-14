@@ -2,6 +2,7 @@ package kaufland.com.coachmarklibrary.renderer.circle;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +12,7 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import org.androidannotations.annotations.EViewGroup;
@@ -46,11 +48,18 @@ public class CircleView extends FrameLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-            Paint paint = new Paint();
-            paint.setColor(defaultColor);
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-            canvas.drawCircle(mCenterX, mCenterY, mRadius,paint);
+        Log.d("Dispatch draw","Dispatch draw");
+        Paint paint = new Paint();
+        paint.setColor(defaultColor);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+        canvas.drawCircle(mCenterX, mCenterY, mRadius,paint);
         super.dispatchDraw(canvas);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        Log.d("On draw","On draw");
+        super.onDraw(canvas);
     }
 
     public float getCenterX() {
