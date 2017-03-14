@@ -1,53 +1,94 @@
 package kaufland.com.coachmarklibrary.renderer.animation;
 
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.graphics.RectF;
 import android.view.ViewGroup;
 
+import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.CoachmarkView;
+import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornersButtonRendererView_;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 
 public class ConcentricCircleAnimationRenderer implements AnimationRenderer {
 
+    private int mAnimationDuration = 500;
+
+    private ConcentricCircleAnimationRenderer(){
+        // just hidding the Contructor
+    }
+
+    public static class Builder {
+
+        private ConcentricCircleAnimationRenderer renderer;
+
+        public Builder() {
+            renderer = new ConcentricCircleAnimationRenderer();
+        }
+
+        public ConcentricCircleAnimationRenderer.Builder withDuration(int duration) {
+            renderer.mAnimationDuration = duration;
+            return this;
+        }
+
+        public AnimationRenderer build() {
+            return renderer;
+        }
+    }
+
 
     @Override
-    public void animate(final CoachmarkView coachmarkView) {
+    public void animate(CoachmarkViewLayout layout, final CircleView view, final AnimationListener animationListener) {
 
-        final CircleView wholeScreenCircle = coachmarkView.getCircleView();
 
-        int startWidth = coachmarkView.getMeasuredWidth();
-        int startHeight = coachmarkView.getMeasuredHeight();
-        int targetWidth = (int) coachmarkView.calcCircleRectF().width();
-        int targetHeight = (int) coachmarkView.calcCircleRectF().height();
+        RectF mCircleRectF = layout.calcCircleRectF();
 
-        ValueAnimator animatorX = ValueAnimator.ofInt(startWidth,targetWidth);
-        ValueAnimator animatorY = ValueAnimator.ofInt(startHeight,targetHeight);
-        animatorX.setDuration(1000);
-        animatorY.setDuration(1000);
+        view.setCenterX(mCircleRectF.centerX());
+        view.setCenterY(mCircleRectF.centerY());
+
+        ValueAnimator animatorX = ValueAnimator.ofFloat(layout.calcScreenRectF().height(), mCircleRectF.width() / 2);
+        animatorX.setDuration(mAnimationDuration);
         animatorX.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int val = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = wholeScreenCircle.getLayoutParams();
-                layoutParams.width = val;
-                wholeScreenCircle.setLayoutParams(layoutParams);
-                coachmarkView.requestLayout();
+                float val = (Float) valueAnimator.getAnimatedValue();
+
+                view.setRadius(val);
+                view.bringToFront();
+                view.forceLayout();
             }
+
         });
-        animatorY.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        animatorX.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                int val = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = wholeScreenCircle.getLayoutParams();
-                layoutParams.height = val;
-                wholeScreenCircle.setLayoutParams(layoutParams);
-                coachmarkView.requestLayout();
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                animationListener.onAnimationFinished();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
             }
         });
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(1000);
-        animatorSet.playTogether(animatorX,animatorY);
-        animatorSet.start();
+        animatorX.start();
+
+
+
+
     }
 }

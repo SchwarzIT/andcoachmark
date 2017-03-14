@@ -13,12 +13,14 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 
+import org.androidannotations.annotations.EView;
 import org.androidannotations.annotations.EViewGroup;
 
-@EViewGroup(resName = "circle_view")
-public class CircleView extends FrameLayout {
+@EView
+public class CircleView extends View {
 
     private float mCenterX;
 

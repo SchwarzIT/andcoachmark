@@ -8,10 +8,9 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Region;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -35,16 +34,16 @@ import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActio
 import kaufland.com.coachmarklibrary.renderer.actiondescription.LeftOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.RightOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.TopOfCircleActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.animation.AnimationListener;
 import kaufland.com.coachmarklibrary.renderer.animation.AnimationRenderer;
+import kaufland.com.coachmarklibrary.renderer.animation.NoAnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
-import kaufland.com.coachmarklibrary.renderer.circle.CircleRenderer;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
-import kaufland.com.coachmarklibrary.renderer.circle.DefaultCircleRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
 @EViewGroup(resName = "coachmark_view")
-public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
+public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, AnimationListener {
 
     @DimensionPixelSizeRes(resName = "default_margin_circle")
     protected int marginArroundCircle;
@@ -56,6 +55,10 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     FrameLayout mFrame;
     @ViewById(resName = "iv_action_arrow")
     ImageView mIvActionArrow;
+
+    @ViewById(resName = "circle_view")
+    CircleView mCircleView;
+
     private Bitmap bitmap;
 
     private View view;
@@ -68,7 +71,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
 
     private View mButtonsView;
 
-    private CircleView mCircleView;
+    private boolean mIsInitialized;
 
 
     private ActionDescriptionRenderer[] mActionDescriptionRenderer = new ActionDescriptionRenderer[]{
@@ -81,8 +84,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private DescriptionRenderer mDescriptionRenderer = new TopOrBottomDescriptionRenderer();
 
     private ButtonRenderer mButtonRenderer;
-
-    private CircleRenderer mCircleRenderer;
 
     private AnimationRenderer mAnimationRenderer;
 
@@ -109,8 +110,23 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         if (bitmap == null) {
             createWindowFrame();
         }
-        canvas.drawBitmap(bitmap,null,calcScreenRectF(), null);
+        canvas.drawBitmap(bitmap, null, calcScreenRectF(), null);
+
         super.dispatchDraw(canvas);
+
+        if(!mIsInitialized){
+            mIsInitialized = true;
+            if (view != null) {
+
+                if (mAnimationRenderer == null) {
+                    mAnimationRenderer = new NoAnimationRenderer();
+                }
+
+                mAnimationRenderer.animate(CoachmarkView.this, mCircleView, CoachmarkView.this);
+
+
+            }
+        }
     }
 
     protected void createWindowFrame() {
@@ -124,40 +140,25 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         paint.setColor(Color.TRANSPARENT);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
 
-        if (view != null) {
+    }
 
-            if (mCircleRenderer == null) {
-                mCircleRenderer = new DefaultCircleRenderer(getContext());
-            }
-            mCircleView = mCircleRenderer.render(this);
-
-            if (mDescription != null) {
-
-                mDescriptionRenderer.render(this, mDescription);
-                mDescription.setVisibility(VISIBLE);
-
-            }
-
-
-            if (mActionDescription != null && mActionDescriptionRenderer != null) {
-
-                renderActionDescription();
-                mActionDescription.setVisibility(VISIBLE);
-
-            }
-
-            if (mButtonRenderer != null) {
-
-                mButtonsView = mButtonRenderer.render(CoachmarkView.this);
-
-            }
-
-            if (mAnimationRenderer != null) {
-
-                mAnimationRenderer.animate(this);
-            }
+    @Override
+    public void onAnimationFinished() {
+        if (mDescription != null) {
+            mDescriptionRenderer.render(this, mDescription);
+            mDescription.setVisibility(VISIBLE);
         }
 
+        if (mActionDescription != null && mActionDescriptionRenderer != null) {
+            renderActionDescription();
+            mActionDescription.setVisibility(VISIBLE);
+            mIvActionArrow.setVisibility(VISIBLE);
+
+        }
+
+        if (mButtonRenderer != null) {
+            mButtonsView = mButtonRenderer.render(CoachmarkView.this);
+        }
     }
 
     public CoachmarkView show() {
@@ -176,6 +177,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mWindowParams.format = PixelFormat.TRANSLUCENT;
 
 
+        mIsInitialized = false;
         mWindowManager.addView(this, mWindowParams);
         requestLayout();
         return this;
@@ -260,10 +262,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mDescriptionRenderer = descriptionRenderer;
     }
 
-    public void setCircleRenderer(CircleRenderer circleRenderer) {
-        mCircleRenderer = circleRenderer;
-    }
-
     public void setView(View view) {
         this.view = view;
         bitmap = null;
@@ -309,4 +307,5 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     public void setAnimationRenderer(AnimationRenderer animationRenderer) {
         mAnimationRenderer = animationRenderer;
     }
+
 }

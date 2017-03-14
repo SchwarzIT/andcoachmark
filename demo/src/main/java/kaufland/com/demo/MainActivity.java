@@ -16,7 +16,6 @@ import kaufland.com.coachmarklibrary.renderer.animation.ConcentricCircleAnimatio
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
-import kaufland.com.coachmarklibrary.renderer.circle.WholeScreenCircleRenderer;
 
 public class MainActivity extends AppCompatActivity implements DemoClickListener {
 
@@ -112,8 +111,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .build();
 
         CoachmarkView mCoachmarkView = new CoachmarkViewBuilder(MainActivity.this)
-                .withCircleRenderer(new WholeScreenCircleRenderer(MainActivity.this))
-                .withAnimationRenderer(new ConcentricCircleAnimationRenderer())
+                .withAnimationRenderer(new ConcentricCircleAnimationRenderer.Builder().withDuration(500).build())
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(buttonRenderer)
