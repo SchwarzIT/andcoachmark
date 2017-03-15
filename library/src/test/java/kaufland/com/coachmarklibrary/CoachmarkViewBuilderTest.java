@@ -12,6 +12,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
+import kaufland.com.coachmarklibrary.renderer.animation.AnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 
 import static org.mockito.Mockito.times;
@@ -109,4 +110,16 @@ public class CoachmarkViewBuilderTest {
 
         verify(mCoachmarkViewMock, times(1)).setPaddingAroundCircle(2);
     }
+
+
+    @Test
+    public void withAnimationRenderer() throws Exception {
+
+        AnimationRenderer mMock = Mockito.mock(AnimationRenderer.class);
+        mBuilderToTest.withAnimationRenderer(mMock);
+
+        verify(mCoachmarkViewMock, times(1)).setAnimationRenderer(mMock);
+    }
+
+
 }

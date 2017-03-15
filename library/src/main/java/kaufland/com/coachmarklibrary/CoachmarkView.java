@@ -279,25 +279,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         this.marginArroundCircle = paddingAroundCircle;
     }
 
-    public CircleView getCircleView() {
-        return mCircleView;
-    }
-
-
-    public void hideAllActionViews() {
-        mActionDescription.setVisibility(View.GONE);
-        mDescription.setVisibility(View.GONE);
-        mButtonsView.setVisibility(View.GONE);
-        mIvActionArrow.setVisibility(View.GONE);
-    }
-
-    public void showAllActionViews() {
-        mActionDescription.setVisibility(View.VISIBLE);
-        mDescription.setVisibility(View.VISIBLE);
-        mButtonsView.setVisibility(View.VISIBLE);
-        mIvActionArrow.setVisibility(View.VISIBLE);
-    }
-
     @Override
     public void dismiss() {
         mWindowManager.removeView(CoachmarkView.this);

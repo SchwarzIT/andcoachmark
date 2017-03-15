@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.RectF;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +14,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import kaufland.com.coachmarklibrary.CoachmarkView_;
+import kaufland.com.coachmarklibrary.ReflectionUtil;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 
@@ -83,6 +85,20 @@ public class ConcentricCircleAnimationRendererTest {
         verify(circleViewMock, times(1)).setRadius(2f);
         verify(circleViewMock, times(1)).bringToFront();
         verify(circleViewMock, times(1)).forceLayout();
-        
+
+    }
+
+    @Test
+    public void testBuilder() throws NoSuchFieldException, IllegalAccessException {
+
+        ConcentricCircleAnimationRenderer.Builder mBuilder = new ConcentricCircleAnimationRenderer.Builder();
+
+        mBuilder.withDuration(300);
+
+        ConcentricCircleAnimationRenderer mRenderer = ReflectionUtil.fieldGet(ConcentricCircleAnimationRenderer.Builder.class, mBuilder, "renderer");
+
+
+        junit.framework.Assert.assertEquals(300, ReflectionUtil.fieldGet(ConcentricCircleAnimationRenderer.class, mRenderer, "mAnimationDuration"));
+
     }
 }

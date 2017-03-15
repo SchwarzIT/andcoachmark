@@ -57,24 +57,12 @@ public class CircleView extends View {
         super.dispatchDraw(canvas);
     }
 
-    public float getCenterX() {
-        return mCenterX;
-    }
-
     public void setCenterX(float mCenterX) {
         this.mCenterX = mCenterX;
     }
 
-    public float getCenterY() {
-        return mCenterY;
-    }
-
     public void setCenterY(float mCenterY) {
         this.mCenterY = mCenterY;
-    }
-
-    public float getRadius() {
-        return mRadius;
     }
 
     public void setRadius(float mRadius) {
