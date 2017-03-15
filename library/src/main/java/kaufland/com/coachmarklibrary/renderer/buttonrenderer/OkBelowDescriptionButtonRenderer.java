@@ -3,6 +3,7 @@ package kaufland.com.coachmarklibrary.renderer.buttonrenderer;
 import android.content.Context;
 import android.graphics.RectF;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -30,7 +31,7 @@ public class OkBelowDescriptionButtonRenderer implements ButtonRenderer {
     }
 
     @Override
-    public void render(final CoachmarkViewLayout layout) {
+    public View render(final CoachmarkViewLayout layout) {
 
         if (inflated == null) {
             LayoutInflater inflater = (LayoutInflater) layout.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,7 +55,7 @@ public class OkBelowDescriptionButtonRenderer implements ButtonRenderer {
 
         if (mBorder != 0) {
             GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setStroke(mBorder, mColor != null ? mColor : layout.getContext().getColor(R.color.default_border_color));
+            gradientDrawable.setStroke(mBorder, mColor != null ? mColor : ContextCompat.getColor(layout.getContext(),R.color.default_border_color));
             mGroupOk.setBackground(gradientDrawable);
 
         }
@@ -72,6 +73,8 @@ public class OkBelowDescriptionButtonRenderer implements ButtonRenderer {
                 inflated.setVisibility(View.VISIBLE);
             }
         });
+
+        return inflated;
 
 
     }

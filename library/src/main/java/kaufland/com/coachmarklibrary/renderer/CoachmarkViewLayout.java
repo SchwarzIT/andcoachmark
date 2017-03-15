@@ -8,7 +8,7 @@ public interface CoachmarkViewLayout {
 
     void dismiss();
 
-    void show();
+    CoachmarkViewLayout show();
 
     Context getContext();
 

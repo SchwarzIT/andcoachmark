@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
+import kaufland.com.coachmarklibrary.CoachmarkView;
 import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
+import kaufland.com.coachmarklibrary.renderer.animation.ConcentricCircleAnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         mRecyclerView.setAdapter(mAdapter);
     }
 
+
     @Override
     public void onClick(View view) {
         setupCoachmark(view);
@@ -67,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(new DismissOnTouchNoButtonRenderer.Builder().build())
-                .buildAroundView(clickedView).show();
+                .buildAroundView(clickedView)
+                .show();
     }
 
     private void setupWithButtonBelowDescription(View clickedView) {
@@ -106,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 })
                 .build();
 
-        new CoachmarkViewBuilder(MainActivity.this)
+        CoachmarkView mCoachmarkView = new CoachmarkViewBuilder(MainActivity.this)
+                .withAnimationRenderer(new ConcentricCircleAnimationRenderer.Builder().withDuration(500).build())
                 .withActionDescription(actionDescription)
                 .withDescription(description)
                 .withButtonRenderer(buttonRenderer)

@@ -20,7 +20,7 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
     }
 
     @Override
-    public void render(final CoachmarkViewLayout layout) {
+    public View render(final CoachmarkViewLayout layout) {
 
         if (inflated == null) {
             LayoutInflater inflater = (LayoutInflater) layout.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -42,6 +42,7 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         inflated.setLayoutParams(params);
         inflated.setVisibility(View.VISIBLE);
 
+        return inflated;
 
     }
 
