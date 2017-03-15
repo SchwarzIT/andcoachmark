@@ -2,17 +2,10 @@ package kaufland.com.coachmarklibrary.renderer.animation;
 
 
 import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.graphics.RectF;
-import android.view.ViewGroup;
 
-import kaufland.com.coachmarklibrary.CoachmarkClickListener;
-import kaufland.com.coachmarklibrary.CoachmarkView;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
-import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
-import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornersButtonRendererView_;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 
 public class ConcentricCircleAnimationRenderer implements AnimationRenderer {
