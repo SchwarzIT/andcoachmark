@@ -20,6 +20,7 @@ Is a library that provides a highly customizable CoachmarkView
 * Above described rendering strategy can be replaced by your own implementations or the priority of the available strategies can be changed.
 * Decide how the button that closes the coachmark should appear (cancel/ok on right side, ok button below description, no button just click to dismiss). It's also possible to write your own rendering.
 * All colors and texts can be changed when setting up the Coachmark with the provided Builder.
+* Decide how the CoachmarkView should appear (NoAnimation or Animation that animates the circle around the clicked view becomes smaller and smaller). It's also possible to write your own startup animation.
 
 ## Implementation
 
@@ -38,7 +39,7 @@ Is a library that provides a highly customizable CoachmarkView
 2. Add gradle dependency
 
     ```
-    compile 'com.github.kaufland:andcoachmark:1.1.2'
+    compile 'com.github.kaufland:andcoachmark:1.2.0'
     ```
 
 3. Configure Coachmark 
@@ -68,6 +69,7 @@ Is a library that provides a highly customizable CoachmarkView
           	.build();
 
 	new CoachmarkViewBuilder(MainActivity.this)
+	.withAnimationRenderer(new ConcentricCircleAnimationRenderer.Builder().withDuration(500).build())
     	.withActionDescription(actionDescription)
     	.withDescription(description)
     	.withButtonRenderer(buttonRenderer)
