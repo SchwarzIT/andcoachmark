@@ -14,13 +14,13 @@ Is a library that provides a highly customizable CoachmarkView
 
 ## Features
 
-* The Description Text dynamically renders text on top or bottom.
-* The ActionDescriptionText (Text with arrow to the circle) dynamically renders left/top/bottom/right with this priority.
-* Both views can be customized - the library takes inflated views as parameter.
+* The Description Text is rendered  dynamically on top or bottom.
+* The ActionDescriptionText (Text with arrow to the circle) is rendered dynamically left/top/bottom/right with this priority.
+* Both views can be customized - the library takes inflated views as parameters.
 * Above described rendering strategy can be replaced by your own implementations or the priority of the available strategies can be changed.
 * Decide how the button that closes the coachmark should appear (cancel/ok on right side, ok button below description, no button just click to dismiss). It's also possible to write your own rendering.
 * All colors and texts can be changed when setting up the Coachmark with the provided Builder.
-* Decide how the CoachmarkView should appear (NoAnimation or Animation that animates the circle around the clicked view becomes smaller and smaller). It's also possible to write your own startup animation.
+* Decide how the CoachmarkView should appear (NoAnimation or Animation that animates the circle around the clicked view getting smaller until it reaches the clicked view). It's also possible to write your own startup animation.
 
 ## Implementation
 
