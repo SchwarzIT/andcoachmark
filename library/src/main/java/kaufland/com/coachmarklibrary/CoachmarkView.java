@@ -179,7 +179,14 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
 
         mIsInitialized = false;
         mWindowManager.addView(this, mWindowParams);
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            // drawing not working in SDK <= KITKAT
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
+
         requestLayout();
+
         return this;
     }
 
