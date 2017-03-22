@@ -39,7 +39,7 @@ Is a library that provides a highly customizable CoachmarkView
 2. Add gradle dependency
 
     ```
-    compile 'com.github.Kaufland:andcoachmark:1.2.0'
+    compile 'com.github.Kaufland:andcoachmark:1.2.1'
     ```
 
 3. Configure Coachmark 
