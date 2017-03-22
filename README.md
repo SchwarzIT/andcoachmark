@@ -7,7 +7,7 @@
 
 Is a library that provides a highly customizable CoachmarkView
 
-![](https://picload.org/image/rlpapgal/coachmark-logo.png)
+![](https://picload.org/image/rlpaprpr/coachmark-logo.png)
 
 ## Demo
 
