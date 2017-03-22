@@ -7,6 +7,8 @@
 
 Is a library that provides a highly customizable CoachmarkView
 
+![](https://picload.org/image/rlpaiwoa/coachmark-logo.png)
+
 ## Demo
 
 ![](https://picload.org/image/rlrporga/ezgif-2-96da2400cb.gif)
