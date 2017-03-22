@@ -1,4 +1,4 @@
-# andcoachmark
+![](https://picload.org/image/rlpaprpr/coachmark-logo.png)
 
 [![Build Status](https://travis-ci.org/Kaufland/andcoachmark.svg?branch=master)](https://travis-ci.org/Kaufland/andcoachmark)
 [![codecov](https://codecov.io/gh/Kaufland/andcoachmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Kaufland/andcoachmark)
@@ -7,7 +7,6 @@
 
 Is a library that provides a highly customizable CoachmarkView
 
-![](https://picload.org/image/rlpaprpr/coachmark-logo.png)
 
 ## Demo
 
