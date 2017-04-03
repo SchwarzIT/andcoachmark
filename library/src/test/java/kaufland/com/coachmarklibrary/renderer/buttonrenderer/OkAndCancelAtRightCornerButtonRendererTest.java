@@ -27,7 +27,7 @@ public class OkAndCancelAtRightCornerButtonRendererTest {
 
         OkAndCancelAtRightCornerButtonRendererView viewMock = Mockito.mock(OkAndCancelAtRightCornerButtonRendererView.class);
 
-        ReflectionUtil.fieldSet(OkAndCancelAtRightCornerButtonRenderer.class, mBuilder.build(), "mView", viewMock);
+        ReflectionUtil.setField(OkAndCancelAtRightCornerButtonRenderer.class, mBuilder.build(), "mView", viewMock);
 
         mBuilder.withOkButton("Ok", clickMock);
         mBuilder.withCancelButton("Cancel", clickMock);
@@ -47,7 +47,7 @@ public class OkAndCancelAtRightCornerButtonRendererTest {
 
         OkAndCancelAtRightCornerButtonRendererView viewMock = Mockito.mock(OkAndCancelAtRightCornerButtonRendererView.class);
 
-        ReflectionUtil.fieldSet(OkAndCancelAtRightCornerButtonRenderer.class, renderer, "mView", viewMock);
+        ReflectionUtil.setField(OkAndCancelAtRightCornerButtonRenderer.class, renderer, "mView", viewMock);
 
 
         CoachmarkViewLayout layout = Mockito.mock(CoachmarkViewLayout.class);

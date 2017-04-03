@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.RectF;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -13,16 +12,13 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import kaufland.com.coachmarklibrary.CoachmarkView_;
 import kaufland.com.coachmarklibrary.ReflectionUtil;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 /**
  * Created by sbra0902 on 14.03.17.
@@ -95,10 +91,10 @@ public class ConcentricCircleAnimationRendererTest {
 
         mBuilder.withDuration(300);
 
-        ConcentricCircleAnimationRenderer mRenderer = ReflectionUtil.fieldGet(ConcentricCircleAnimationRenderer.Builder.class, mBuilder, "renderer");
+        ConcentricCircleAnimationRenderer mRenderer = ReflectionUtil.getField(ConcentricCircleAnimationRenderer.Builder.class, mBuilder, "renderer");
 
 
-        junit.framework.Assert.assertEquals(300, ReflectionUtil.fieldGet(ConcentricCircleAnimationRenderer.class, mRenderer, "mAnimationDuration"));
+        junit.framework.Assert.assertEquals(300, ReflectionUtil.getField(ConcentricCircleAnimationRenderer.class, mRenderer, "mAnimationDuration"));
 
     }
 }

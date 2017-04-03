@@ -13,7 +13,7 @@ public class DemoAdapter extends RecyclerView.Adapter<DemoAdapter.MyViewHolder> 
     private DemoClickListener mClickListener;
 
     DemoAdapter() {
-        mItems = new String[]{"1", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4",};
+        mItems = new String[]{"1", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4", "2", "3", "4"};
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

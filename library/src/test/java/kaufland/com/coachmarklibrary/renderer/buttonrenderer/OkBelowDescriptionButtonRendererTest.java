@@ -12,7 +12,6 @@ import android.widget.TextView;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
@@ -21,7 +20,6 @@ import kaufland.com.coachmarklibrary.ReflectionUtil;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,10 +40,10 @@ public class OkBelowDescriptionButtonRendererTest {
         mBuilder.withBorder(2, 0);
         OkBelowDescriptionButtonRenderer mBuild = mBuilder.build();
 
-        Assert.assertEquals(clickMock, ReflectionUtil.fieldGet(OkBelowDescriptionButtonRenderer.class, mBuild, "mListener"));
-        Assert.assertEquals(0, ReflectionUtil.fieldGet(OkBelowDescriptionButtonRenderer.class, mBuild, "mColor"));
-        Assert.assertEquals(2, ReflectionUtil.fieldGet(OkBelowDescriptionButtonRenderer.class, mBuild, "mBorder"));
-        Assert.assertEquals("ok", ReflectionUtil.fieldGet(OkBelowDescriptionButtonRenderer.class, mBuild, "mOkText"));
+        Assert.assertEquals(clickMock, ReflectionUtil.getField(OkBelowDescriptionButtonRenderer.class, mBuild, "mListener"));
+        Assert.assertEquals(0, ReflectionUtil.getField(OkBelowDescriptionButtonRenderer.class, mBuild, "mColor"));
+        Assert.assertEquals(2, ReflectionUtil.getField(OkBelowDescriptionButtonRenderer.class, mBuild, "mBorder"));
+        Assert.assertEquals("ok", ReflectionUtil.getField(OkBelowDescriptionButtonRenderer.class, mBuild, "mOkText"));
 
 
     }
@@ -60,7 +58,7 @@ public class OkBelowDescriptionButtonRendererTest {
         mBuilder.withBorder(2, 0);
         OkBelowDescriptionButtonRenderer renderer = mBuilder.build();
 
-        ReflectionUtil.fieldSet(OkBelowDescriptionButtonRenderer.class, renderer, "inflated", mMock);
+        ReflectionUtil.setField(OkBelowDescriptionButtonRenderer.class, renderer, "inflated", mMock);
 
 
         TextView okBtn = Mockito.mock(TextView.class);

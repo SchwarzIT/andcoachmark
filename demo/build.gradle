@@ -4,7 +4,6 @@ android {
     compileSdkVersion 25
     buildToolsVersion "${androidBuildToolsVersion}"
 
-
     lintOptions {
         abortOnError false
     }
@@ -14,9 +13,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {

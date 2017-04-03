@@ -3,22 +3,14 @@ package kaufland.com.coachmarklibrary.renderer.buttonrenderer;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import org.apache.tools.ant.util.ReflectUtil;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import kaufland.com.coachmarklibrary.CoachmarkClickListener;
-import kaufland.com.coachmarklibrary.CoachmarkView_;
 import kaufland.com.coachmarklibrary.ReflectionUtil;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -37,7 +29,7 @@ public class DismissOnTouchNoButtonRendererTest {
         mBuilder.withListener(clickMock);
         DismissOnTouchNoButtonRenderer mBuild = mBuilder.build();
 
-        Assert.assertEquals(clickMock, ReflectionUtil.fieldGet(DismissOnTouchNoButtonRenderer.class, mBuild, "mListener"));
+        Assert.assertEquals(clickMock, ReflectionUtil.getField(DismissOnTouchNoButtonRenderer.class, mBuild, "mListener"));
 
     }
 
@@ -46,7 +38,7 @@ public class DismissOnTouchNoButtonRendererTest {
 
         View mMock = Mockito.mock(View.class);
         DismissOnTouchNoButtonRenderer renderer = new DismissOnTouchNoButtonRenderer.Builder().build();
-        ReflectionUtil.fieldSet(DismissOnTouchNoButtonRenderer.class, renderer, "inflated", mMock);
+        ReflectionUtil.setField(DismissOnTouchNoButtonRenderer.class, renderer, "inflated", mMock);
 
 
         renderer.render(null);

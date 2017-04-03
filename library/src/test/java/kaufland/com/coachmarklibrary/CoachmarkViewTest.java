@@ -3,10 +3,15 @@ package kaufland.com.coachmarklibrary;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.PixelFormat;
 import android.graphics.RectF;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,14 +21,12 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.animation.AnimationRenderer;
@@ -32,9 +35,11 @@ import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,31 +47,89 @@ import static org.mockito.Mockito.when;
 /**
  * Created by sbra0902 on 15.03.17.
  */
-@RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE, sdk = 22)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 22)
 public class CoachmarkViewTest {
 
     private Activity mActivity;
-    private CoachmarkView mView;
+    private CoachmarkView mCoachmarkView;
+    private AttributeSet mAttributeSet;
 
     @Before
     public void init() {
-        ActivityController<Activity> activityController = Robolectric.buildActivity(Activity.class).create().start().resume()
-                .visible();
 
-        mActivity = activityController.get();
+        mActivity = Robolectric.setupActivity(Activity.class);
+        mCoachmarkView = new CoachmarkView(mActivity);
+        mCoachmarkView.mWindowManager = mock(WindowManager.class);
+        mAttributeSet = Robolectric.buildAttributeSet().build();
+    }
 
-        mView = new CoachmarkView(mActivity);
+    @Test
+    public void testIsCoachmarkShown() {
+
+        CoachmarkView coachmarkView = mock(CoachmarkView.class);
+        DisplayMetrics displayMetrics = mock(DisplayMetrics.class);
+        Display display = mock(Display.class);
+        when(coachmarkView.mWindowManager.getDefaultDisplay()).thenReturn(display);
+        display.getMetrics(displayMetrics);
+        verify(display).getMetrics(displayMetrics);
+
+        ArgumentCaptor<WindowManager.LayoutParams> params = ArgumentCaptor.forClass(WindowManager.LayoutParams.class);
+        WindowManager.LayoutParams windowManagerMock = mock(WindowManager.LayoutParams.class);
+
+
+        windowManagerMock.gravity = Gravity.TOP;
+        windowManagerMock.x = 0;
+        windowManagerMock.y = 0;
+        windowManagerMock.height = WindowManager.LayoutParams.MATCH_PARENT;
+        windowManagerMock.width = WindowManager.LayoutParams.MATCH_PARENT;
+        windowManagerMock.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
+        windowManagerMock.format = PixelFormat.TRANSLUCENT;
+
+        Assert.assertFalse(coachmarkView.isIsInitialized());
+    }
+
+    @Test
+    public void testScreenParams() throws Exception {
+        DisplayProvider display = Mockito.mock(DisplayProvider.class);
+        BuildProvider build = mock(BuildProvider.class);
+        DeviceInfoProvider deviceInfoProvider = new DeviceInfoProvider(display, build);
+
+        when(display.getWidth()).thenReturn(1000);
+        when(display.getHeight()).thenReturn(2000);
+        when(build.getModel()).thenReturn(Build.MODEL);
+
+        DeviceInfoProvider.DeviceInfo deviceInfo = deviceInfoProvider.getScreenParams();
+
+        assertThat(deviceInfo.mScreenWidth, equalTo(1000));
+        assertThat(deviceInfo.mScreenHeight, equalTo(2000));
+        assertThat(deviceInfo.mModel, equalTo(Build.MODEL));
+    }
+
+    @Test
+    public void testIsInEditMode() {
+        Assert.assertTrue(mCoachmarkView.isInEditMode());
+    }
+
+    @Test
+    public void testIsCoachmarkDismissed() {
+        mCoachmarkView.dismiss();
+        Assert.assertTrue(mCoachmarkView.getWindowToken() == null);
+    }
+
+    @Test
+    public void testCoachmarkInitialization() {
+        Assert.assertNotNull(new CoachmarkView(mActivity, mAttributeSet));
+        Assert.assertNotNull(new CoachmarkView(mActivity, mAttributeSet, 0, 0));
+        Assert.assertNotNull(new CoachmarkView(mActivity, mAttributeSet, 0));
     }
 
     @Test
     public void testCalcCircleRectF() {
 
-        View mClickedViewMock = Mockito.mock(View.class);
-
+        View mClickedViewMock = mock(View.class);
         when(mClickedViewMock.getHeight()).thenReturn(10);
         when(mClickedViewMock.getWidth()).thenReturn(30);
-
 
         doAnswer(new Answer() {
             @Override
@@ -80,121 +143,91 @@ public class CoachmarkViewTest {
             }
         }).when(mClickedViewMock).getLocationInWindow(any(int[].class));
 
-        mView.setView(mClickedViewMock);
-        mView.marginArroundCircle = 2;
-
-
-        RectF mRectF = mView.calcCircleRectF();
-
+        mCoachmarkView.setView(mClickedViewMock);
+        mCoachmarkView.marginAroundCircle = 2;
+        RectF mRectF = mCoachmarkView.calcCircleRectF();
         Assert.assertEquals(34.0f, mRectF.width());
         Assert.assertEquals(34.0f, mRectF.height());
         Assert.assertEquals(1.0f, mRectF.left);
         Assert.assertEquals(-10.0f, mRectF.top);
-
-
     }
 
     @Test
     public void testCalcScreenRectF() {
 
-
-        mActivity.addContentView(mView, new LinearLayout.LayoutParams(200, 200));
-
-        RectF mRectF = mView.calcScreenRectF();
-
+        mActivity.addContentView(mCoachmarkView, new LinearLayout.LayoutParams(200, 200));
+        RectF mRectF = mCoachmarkView.calcScreenRectF();
         Assert.assertEquals(200.0f, mRectF.width());
         Assert.assertEquals(200.0f, mRectF.height());
         Assert.assertEquals(0.0f, mRectF.left);
         Assert.assertEquals(0.0f, mRectF.top);
-
-
     }
 
     @Test
     public void testCalcActionArrowRectF() {
 
-
-        ImageView mMock = Mockito.mock(ImageView.class);
+        ImageView mMock = mock(ImageView.class);
         when(mMock.getHeight()).thenReturn(20);
         when(mMock.getWidth()).thenReturn(30);
         when(mMock.getX()).thenReturn(2f);
         when(mMock.getY()).thenReturn(3f);
-
-        mView.mIvActionArrow = mMock;
-
-
-        RectF mRectF = mView.calcActionArrowRect();
-
+        mCoachmarkView.mIvActionArrow = mMock;
+        RectF mRectF = mCoachmarkView.calcActionArrowRect();
         Assert.assertEquals(30.0f, mRectF.width());
         Assert.assertEquals(20.0f, mRectF.height());
         Assert.assertEquals(2.0f, mRectF.left);
         Assert.assertEquals(3.0f, mRectF.top);
-
-
     }
 
     @Test
     public void testCalcDescriptionRectF() {
 
-
-        TextView mMock = Mockito.mock(TextView.class);
+        TextView mMock = mock(TextView.class);
         when(mMock.getHeight()).thenReturn(20);
         when(mMock.getWidth()).thenReturn(30);
         when(mMock.getX()).thenReturn(2f);
         when(mMock.getY()).thenReturn(3f);
 
-        mView.setDescription(mMock);
+        mCoachmarkView.setDescription(mMock);
 
-        RectF mRectF = mView.calcDescriptionRect();
+        RectF mRectF = mCoachmarkView.calcDescriptionRect();
 
-        Assert.assertEquals(mView.getChildAt(0), mMock);
+        Assert.assertEquals(mCoachmarkView.getChildAt(0), mMock);
         Assert.assertEquals(30.0f, mRectF.width());
         Assert.assertEquals(20.0f, mRectF.height());
         Assert.assertEquals(2.0f, mRectF.left);
         Assert.assertEquals(3.0f, mRectF.top);
-
-
     }
 
     @Test
     public void testCalcActionDescriptionRectF() {
-
-
-        TextView mMock = Mockito.mock(TextView.class);
+        TextView mMock = mock(TextView.class);
         when(mMock.getHeight()).thenReturn(20);
         when(mMock.getWidth()).thenReturn(30);
         when(mMock.getX()).thenReturn(2f);
         when(mMock.getY()).thenReturn(3f);
 
-        mView.setActionDescription(mMock);
+        mCoachmarkView.setActionDescription(mMock);
+        RectF mRectF = mCoachmarkView.calcActionDescriptionRect();
 
-        RectF mRectF = mView.calcActionDescriptionRect();
-
-        Assert.assertEquals(mView.getChildAt(0), mMock);
+        Assert.assertEquals(mCoachmarkView.getChildAt(0), mMock);
         Assert.assertEquals(30.0f, mRectF.width());
         Assert.assertEquals(20.0f, mRectF.height());
         Assert.assertEquals(2.0f, mRectF.left);
         Assert.assertEquals(3.0f, mRectF.top);
-
-
     }
 
     @Test
     public void testDispatchDraw() throws NoSuchFieldException, IllegalAccessException {
 
-        mActivity.addContentView(mView, new LinearLayout.LayoutParams(200, 200));
-        Canvas canvasMock = Mockito.mock(Canvas.class);
-        mView.setView(Mockito.mock(View.class));
-
-        mView.mCircleView = Mockito.mock(CircleView.class);
-        mView.dispatchDraw(canvasMock);
-
-        AnimationRenderer animaRenderer = ReflectionUtil.fieldGet(CoachmarkView.class, mView, "mAnimationRenderer");
-
-        Assert.assertTrue(animaRenderer instanceof NoAnimationRenderer);
-
-        Bitmap bitmap = ReflectionUtil.fieldGet(CoachmarkView.class, mView, "bitmap");
-
+        mActivity.addContentView(mCoachmarkView, new LinearLayout.LayoutParams(200, 200));
+        Canvas canvasMock = mock(Canvas.class);
+        mCoachmarkView.setView(mock(View.class));
+        mCoachmarkView.mCircleView = mock(CircleView.class);
+        mCoachmarkView.dispatchDraw(canvasMock);
+        AnimationRenderer animRenderer = ReflectionUtil.getField(CoachmarkView.class, mCoachmarkView, "mAnimationRenderer");
+        Assert.assertTrue(animRenderer instanceof NoAnimationRenderer);
+        Bitmap bitmap = ReflectionUtil.getField(CoachmarkView.class, mCoachmarkView, "mBitmap");
         Assert.assertEquals(200, bitmap.getWidth());
         Assert.assertEquals(200, bitmap.getHeight());
     }
@@ -202,29 +235,27 @@ public class CoachmarkViewTest {
     @Test
     public void testOnAnimationFinished() throws NoSuchFieldException, IllegalAccessException {
 
-        TextView desc = Mockito.mock(TextView.class);
-        TextView actionDesc = Mockito.mock(TextView.class);
+        TextView desc = mock(TextView.class);
+        TextView actionDesc = mock(TextView.class);
 
-        mView.mIvActionArrow = Mockito.mock(ImageView.class);
+        mCoachmarkView.mIvActionArrow = mock(ImageView.class);
 
-        DescriptionRenderer descRenderer = Mockito.mock(DescriptionRenderer.class);
-        ActionDescriptionRenderer actDescRenderer = Mockito.mock(ActionDescriptionRenderer.class);
-        when(actDescRenderer.isRenderingPossible(mView)).thenReturn(true);
-        ButtonRenderer buttonRenderer = Mockito.mock(ButtonRenderer.class);
+        DescriptionRenderer descRenderer = mock(DescriptionRenderer.class);
+        ActionDescriptionRenderer actDescRenderer = mock(ActionDescriptionRenderer.class);
+        when(actDescRenderer.isRenderingPossible(mCoachmarkView)).thenReturn(true);
+        ButtonRenderer buttonRenderer = mock(ButtonRenderer.class);
 
-        mView.setActionDescription(actionDesc);
-        mView.setDescription(desc);
-        mView.setButtonRenderer(buttonRenderer);
-        mView.setActionDescriptionRenderer(actDescRenderer);
-        mView.setDescriptionRenderer(descRenderer);
+        mCoachmarkView.setActionDescription(actionDesc);
+        mCoachmarkView.setDescription(desc);
+        mCoachmarkView.setButtonRenderer(buttonRenderer);
+        mCoachmarkView.setActionDescriptionRenderer(actDescRenderer);
+        mCoachmarkView.setDescriptionRenderer(descRenderer);
 
-        mView.onAnimationFinished();
+        mCoachmarkView.onAnimationFinished();
 
-        verify(descRenderer, times(1)).render(mView, desc);
-        verify(actDescRenderer, times(1)).render(mView, actionDesc, mView.mIvActionArrow);
-        verify(actDescRenderer, times(1)).isRenderingPossible(mView);
-        verify(buttonRenderer, times(1)).render(mView);
+        verify(descRenderer, times(1)).render(mCoachmarkView, desc);
+        verify(actDescRenderer, times(1)).render(mCoachmarkView, actionDesc, mCoachmarkView.mIvActionArrow);
+        verify(actDescRenderer, times(1)).isRenderingPossible(mCoachmarkView);
+        verify(buttonRenderer, times(1)).render(mCoachmarkView);
     }
-
-
 }

@@ -61,5 +61,4 @@ public class CoachmarkViewBuilder {
         mCoachmarkView.setAnimationRenderer(renderer);
         return this;
     }
-
 }

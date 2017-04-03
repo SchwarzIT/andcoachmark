@@ -28,7 +28,6 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
             layout.addView(inflated);
         }
 
-
         inflated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +42,6 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         inflated.setVisibility(View.VISIBLE);
 
         return inflated;
-
     }
 
     public static class Builder {
@@ -63,6 +61,5 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         public DismissOnTouchNoButtonRenderer build() {
             return renderer;
         }
-
     }
 }
