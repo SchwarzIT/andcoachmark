@@ -53,6 +53,7 @@ buildscript {
 apt {
     arguments {
         library 'true'
+        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
     }
 }
 

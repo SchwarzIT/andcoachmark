@@ -2,4 +2,5 @@
 <resources>
     <color name="default_backcolor">#BF424242</color>
     <color name="default_border_color">#FFFFFF</color>
+    <color name="color_green">#00ff08</color>
 </resources>
