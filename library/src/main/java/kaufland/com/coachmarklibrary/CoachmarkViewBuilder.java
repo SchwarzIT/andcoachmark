@@ -3,8 +3,8 @@ package kaufland.com.coachmarklibrary;
 import android.content.Context;
 import android.view.View;
 
-import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.ActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.animation.AnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 
@@ -21,7 +21,7 @@ public class CoachmarkViewBuilder {
         return this;
     }
 
-    public CoachmarkViewLayout buildAroundView(View view) {
+    public CoachmarkView buildAroundView(View view) {
         mCoachmarkView.setView(view);
         return mCoachmarkView;
     }
@@ -41,6 +41,7 @@ public class CoachmarkViewBuilder {
         return this;
     }
 
+
     public CoachmarkViewBuilder withActionDescription(View actionDescription) {
         mCoachmarkView.setActionDescription(actionDescription);
         return this;
@@ -53,6 +54,11 @@ public class CoachmarkViewBuilder {
 
     public CoachmarkViewBuilder withPaddingAroundCircle(int padding) {
         mCoachmarkView.setPaddingAroundCircle(padding);
+        return this;
+    }
+
+    public CoachmarkViewBuilder withAnimationRenderer(AnimationRenderer renderer){
+        mCoachmarkView.setAnimationRenderer(renderer);
         return this;
     }
 

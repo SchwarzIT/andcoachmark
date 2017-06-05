@@ -13,6 +13,12 @@
         android:padding="2dp"
         android:id="@+id/iv_action_arrow"
         android:scaleType="center"
+        android:visibility="invisible"
         android:src="@drawable/ic_arrow_forward_white_24dp"/>
+
+    <kaufland.com.coachmarklibrary.renderer.circle.CircleView_
+        android:layout_width="wrap_content"
+        android:id="@+id/circle_view"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

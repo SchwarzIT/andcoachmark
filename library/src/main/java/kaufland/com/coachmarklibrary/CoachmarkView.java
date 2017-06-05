@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -33,28 +34,30 @@ import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActio
 import kaufland.com.coachmarklibrary.renderer.actiondescription.LeftOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.RightOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.actiondescription.TopOfCircleActionDescriptionRenderer;
+import kaufland.com.coachmarklibrary.renderer.animation.AnimationListener;
+import kaufland.com.coachmarklibrary.renderer.animation.AnimationRenderer;
+import kaufland.com.coachmarklibrary.renderer.animation.NoAnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.ButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 import kaufland.com.coachmarklibrary.renderer.description.DescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescriptionRenderer;
 
 @EViewGroup(resName = "coachmark_view")
-class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
-
-    @SystemService
-    WindowManager mWindowManager;
-
-    @ViewById(resName = "circle")
-    FrameLayout mFrame;
-
-    @ViewById(resName = "iv_action_arrow")
-    ImageView mIvActionArrow;
+public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, AnimationListener {
 
     @DimensionPixelSizeRes(resName = "default_margin_circle")
     protected int marginArroundCircle;
-
     @ColorRes(resName = "default_backcolor")
     protected int defaultBackColor;
+    @SystemService
+    WindowManager mWindowManager;
+    @ViewById(resName = "circle")
+    FrameLayout mFrame;
+    @ViewById(resName = "iv_action_arrow")
+    ImageView mIvActionArrow;
 
+    @ViewById(resName = "circle_view")
+    CircleView mCircleView;
 
     private Bitmap bitmap;
 
@@ -63,7 +66,12 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private int windowHeight;
 
     private View mActionDescription;
+
     private View mDescription;
+
+    private View mButtonsView;
+
+    private boolean mIsInitialized;
 
 
     private ActionDescriptionRenderer[] mActionDescriptionRenderer = new ActionDescriptionRenderer[]{
@@ -76,6 +84,8 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     private DescriptionRenderer mDescriptionRenderer = new TopOrBottomDescriptionRenderer();
 
     private ButtonRenderer mButtonRenderer;
+
+    private AnimationRenderer mAnimationRenderer;
 
 
     public CoachmarkView(Context context) {
@@ -90,7 +100,6 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         super(context, attrs, defStyleAttr);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public CoachmarkView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -101,46 +110,58 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         if (bitmap == null) {
             createWindowFrame();
         }
-        canvas.drawBitmap(bitmap, 0, 0, null);
+        canvas.drawBitmap(bitmap, null, calcScreenRectF(), null);
+
         super.dispatchDraw(canvas);
+
+        if(!mIsInitialized){
+            mIsInitialized = true;
+            if (view != null) {
+
+                if (mAnimationRenderer == null) {
+                    mAnimationRenderer = new NoAnimationRenderer();
+                }
+
+                mAnimationRenderer.animate(CoachmarkView.this, mCircleView, CoachmarkView.this);
+
+
+            }
+        }
     }
 
     protected void createWindowFrame() {
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas osCanvas = new Canvas(bitmap);
 
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Paint paint = new Paint();
         paint.setColor(defaultBackColor);
         osCanvas.drawRect(calcScreenRectF(), paint);
 
         paint.setColor(Color.TRANSPARENT);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
 
-        if (view != null) {
-
-            if (mDescription != null) {
-                mDescriptionRenderer.render(this, mDescription);
-                mDescription.setVisibility(VISIBLE);
-            }
-
-
-            if (mActionDescription != null && mActionDescriptionRenderer != null) {
-                renderActionDescription();
-                mActionDescription.setVisibility(VISIBLE);
-            }
-
-            if (mButtonRenderer != null) {
-                mButtonRenderer.render(CoachmarkView.this);
-            }
-
-            RectF circle = calcCircleRectF();
-
-            osCanvas.drawCircle(circle.centerX(), circle.centerY(), circle.width() / 2, paint);
-        }
-
     }
 
-    public void show() {
+    @Override
+    public void onAnimationFinished() {
+        if (mDescription != null) {
+            mDescriptionRenderer.render(this, mDescription);
+            mDescription.setVisibility(VISIBLE);
+        }
+
+        if (mActionDescription != null && mActionDescriptionRenderer != null) {
+            renderActionDescription();
+            mActionDescription.setVisibility(VISIBLE);
+            mIvActionArrow.setVisibility(VISIBLE);
+
+        }
+
+        if (mButtonRenderer != null) {
+            mButtonsView = mButtonRenderer.render(CoachmarkView.this);
+        }
+    }
+
+    public CoachmarkView show() {
         DisplayMetrics metrics = new DisplayMetrics();
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
 
@@ -152,13 +173,21 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
         mWindowParams.y = 0;
         mWindowParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_ATTACHED_IN_DECOR;
+        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
-        mWindowParams.windowAnimations = 0;
 
 
+        mIsInitialized = false;
         mWindowManager.addView(this, mWindowParams);
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            // drawing not working in SDK <= KITKAT
+            setLayerType(LAYER_TYPE_SOFTWARE, null);
+        }
+
         requestLayout();
+
+        return this;
     }
 
 
@@ -261,4 +290,10 @@ class CoachmarkView extends FrameLayout implements CoachmarkViewLayout {
     public void dismiss() {
         mWindowManager.removeView(CoachmarkView.this);
     }
+
+
+    public void setAnimationRenderer(AnimationRenderer animationRenderer) {
+        mAnimationRenderer = animationRenderer;
+    }
+
 }

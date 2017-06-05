@@ -1,11 +1,12 @@
-# andcoachmark
-
+[![](https://jitpack.io/v/Kaufland/andcoachmark.svg)](https://jitpack.io/#Kaufland/andcoachmark)
 [![Build Status](https://travis-ci.org/Kaufland/andcoachmark.svg?branch=master)](https://travis-ci.org/Kaufland/andcoachmark)
 [![codecov](https://codecov.io/gh/Kaufland/andcoachmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Kaufland/andcoachmark)
 [![KIS](https://img.shields.io/badge/KIS-awesome-red.svg)](http://www.spannende-it.de)
 
+<img src="https://picload.org/image/rlpaprpr/coachmark-logo.png"/>
 
 Is a library that provides a highly customizable CoachmarkView
+
 
 ## Demo
 
@@ -14,12 +15,13 @@ Is a library that provides a highly customizable CoachmarkView
 
 ## Features
 
-* The Description Text dynamically renders text on top or bottom.
-* The ActionDescriptionText (Text with arrow to the circle) dynamically renders left/top/bottom/right with this priority.
-* These both views can be customized - the library takes inflated views as parameter.
-* Aboved described rendering strategy can be replaced by own implementations or the priority of the available strategies can be changed.
-* Decide how the button that closes the coachmark should appear (cancel/ok on right side, ok button below description, no button just click to dismiss). It's also possible to write own rendering.
+* The Description Text is rendered  dynamically on top or bottom.
+* The ActionDescriptionText (Text with arrow to the circle) is rendered dynamically left/top/bottom/right with this priority.
+* Both views can be customized - the library takes inflated views as parameters.
+* Above described rendering strategy can be replaced by your own implementations or the priority of the available strategies can be changed.
+* Decide how the button that closes the coachmark should appear (cancel/ok on right side, ok button below description, no button just click to dismiss). It's also possible to write your own rendering.
 * All colors and texts can be changed when setting up the Coachmark with the provided Builder.
+* Decide how the CoachmarkView should appear (NoAnimation or Animation that animates the circle around the clicked view getting smaller until it reaches the clicked view). It's also possible to write your own startup animation.
 
 ## Implementation
 
@@ -38,7 +40,7 @@ Is a library that provides a highly customizable CoachmarkView
 2. Add gradle dependency
 
     ```
-    compile 'com.github.kaufland:andcoachmark:1.1.2'
+    compile 'com.github.Kaufland:andcoachmark:1.2.1'
     ```
 
 3. Configure Coachmark 
@@ -68,6 +70,7 @@ Is a library that provides a highly customizable CoachmarkView
           	.build();
 
 	new CoachmarkViewBuilder(MainActivity.this)
+	.withAnimationRenderer(new ConcentricCircleAnimationRenderer.Builder().withDuration(500).build())
     	.withActionDescription(actionDescription)
     	.withDescription(description)
     	.withButtonRenderer(buttonRenderer)

@@ -8,7 +8,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "${androidBuildToolsVersion}"
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -53,6 +53,7 @@ buildscript {
 apt {
     arguments {
         library 'true'
+        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
     }
 }
 
@@ -90,5 +91,6 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4-rule:1.6.3'
     testCompile 'org.powermock:powermock-api-mockito:1.6.3'
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.3'
-    testCompile "org.robolectric:robolectric:3.2.2"
+    testCompile 'org.robolectric:robolectric:3.2.2'
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
 }
