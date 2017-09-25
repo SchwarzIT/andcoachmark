@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "${androidBuildToolsVersion}"
 
 
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "kaufland.com.demo"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
