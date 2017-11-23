@@ -31,6 +31,7 @@ android {
 
 buildscript {
     repositories {
+        google()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
         maven { url uri('libs') }
@@ -44,7 +45,7 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3.3'
+    gradleVersion = '3.0.1'
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest', group: 'verification') {

@@ -6,6 +6,7 @@ buildscript {
         jUnitVersion = '4.12'
     }
     repositories {
+        google()
         jcenter()
     }
     dependencies {
@@ -16,6 +17,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
         maven {
             url "https://maven.google.com"
