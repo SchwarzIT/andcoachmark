@@ -1,12 +1,10 @@
 apply plugin: 'com.android.library'
-apply plugin: 'android-apt'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
 apply plugin: 'pmd'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "${androidBuildToolsVersion}"
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
@@ -28,11 +26,6 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
     }
 }
 
@@ -47,13 +40,6 @@ buildscript {
     dependencies {
         // replace with the current version of the android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-}
-
-apt {
-    arguments {
-        library 'true'
-        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
     }
 }
 
@@ -78,19 +64,19 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest', group:
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "com.android.support:appcompat-v7:${androidSupportVersion}"
-    apt "org.androidannotations:androidannotations:4.3.1"
-    compile 'org.androidannotations:androidannotations-api:4.3.1'
-    testCompile "junit:junit:${jUnitVersion}"
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile 'org.powermock:powermock-module-junit4:1.6.3'
-    testCompile 'org.powermock:powermock-module-junit4-rule:1.6.3'
-    testCompile 'org.powermock:powermock-api-mockito:1.6.3'
-    testCompile 'org.powermock:powermock-classloading-xstream:1.6.3'
-    testCompile 'org.robolectric:robolectric:3.2.2'
-    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+    implementation "com.android.support:appcompat-v7:${androidSupportVersion}"
+    annotationProcessor "org.androidannotations:androidannotations:4.3.1"
+    implementation 'org.androidannotations:androidannotations-api:4.3.1'
+    testImplementation "junit:junit:${jUnitVersion}"
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation 'org.powermock:powermock-module-junit4:1.6.3'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.3'
+    testImplementation 'org.powermock:powermock-api-mockito:1.6.3'
+    testImplementation 'org.powermock:powermock-classloading-xstream:1.6.3'
+    testImplementation 'org.robolectric:robolectric:3.2.2'
+    testImplementation 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
 }
