@@ -57,6 +57,11 @@ public class CoachmarkViewBuilder {
         return this;
     }
 
+    public CoachmarkViewBuilder withCircleColor(int color) {
+        mCoachmarkView.mCircleView.setColor(color);
+        return this;
+    }
+
     public CoachmarkViewBuilder withAnimationRenderer(AnimationRenderer renderer){
         mCoachmarkView.setAnimationRenderer(renderer);
         return this;
