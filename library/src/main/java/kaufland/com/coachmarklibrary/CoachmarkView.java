@@ -116,16 +116,11 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
 
         if(!mIsInitialized){
             mIsInitialized = true;
-            if (view != null) {
-
-                if (mAnimationRenderer == null) {
-                    mAnimationRenderer = new NoAnimationRenderer();
-                }
-
-                mAnimationRenderer.animate(CoachmarkView.this, mCircleView, CoachmarkView.this);
-
-
+            if (mAnimationRenderer == null) {
+                mAnimationRenderer = new NoAnimationRenderer();
             }
+
+            mAnimationRenderer.animate(CoachmarkView.this, mCircleView, CoachmarkView.this);
         }
     }
 
@@ -219,6 +214,10 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     }
 
     public RectF calcCircleRectF() {
+
+        if(view == null){
+            return new RectF();
+        }
         float radius = marginArroundCircle + view.getWidth() / 2;
         int[] xy = new int[2];
         view.getLocationOnScreen(xy);

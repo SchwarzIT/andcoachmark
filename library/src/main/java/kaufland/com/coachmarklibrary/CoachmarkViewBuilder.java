@@ -26,6 +26,11 @@ public class CoachmarkViewBuilder {
         return mCoachmarkView;
     }
 
+    public CoachmarkView build() {
+        mCoachmarkView.setView(null);
+        return mCoachmarkView;
+    }
+
     public CoachmarkViewBuilder withBackgroundColor(int color) {
         mCoachmarkView.setBackColor(color);
         return this;
