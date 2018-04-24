@@ -78,7 +78,7 @@ public class CoachmarkViewTest {
                 mArg[1] = 2;
                 return null;
             }
-        }).when(mClickedViewMock).getLocationInWindow(any(int[].class));
+        }).when(mClickedViewMock).getLocationOnScreen(any(int[].class));
 
         mView.setView(mClickedViewMock);
         mView.marginArroundCircle = 2;

@@ -221,7 +221,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     public RectF calcCircleRectF() {
         float radius = marginArroundCircle + view.getWidth() / 2;
         int[] xy = new int[2];
-        view.getLocationInWindow(xy);
+        view.getLocationOnScreen(xy);
         float centerX = xy[0] + view.getWidth() / 2;
         float centerY = xy[1] - (windowHeight - getHeight()) + view.getHeight() / 2;
         return new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
