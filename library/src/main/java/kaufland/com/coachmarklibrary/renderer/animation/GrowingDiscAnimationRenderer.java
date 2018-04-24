@@ -9,36 +9,36 @@ import kaufland.com.coachmarklibrary.R;
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
 import kaufland.com.coachmarklibrary.renderer.circle.CircleView;
 
-public class ReverseConcentricCircleAnimationRenderer implements AnimationRenderer {
+public class GrowingDiscAnimationRenderer implements AnimationRenderer {
 
     private int mAnimationDuration = 500;
 
     private Integer mWithRadius;
     private Integer mWithTransparentRadius;
 
-    private ReverseConcentricCircleAnimationRenderer(){
+    private GrowingDiscAnimationRenderer(){
         // just hidding the Contructor
     }
 
     public static class Builder {
 
-        private ReverseConcentricCircleAnimationRenderer renderer;
+        private GrowingDiscAnimationRenderer renderer;
 
         public Builder() {
-            renderer = new ReverseConcentricCircleAnimationRenderer();
+            renderer = new GrowingDiscAnimationRenderer();
         }
 
-        public ReverseConcentricCircleAnimationRenderer.Builder withDuration(int duration) {
+        public GrowingDiscAnimationRenderer.Builder withDuration(int duration) {
             renderer.mAnimationDuration = duration;
             return this;
         }
 
-        public ReverseConcentricCircleAnimationRenderer.Builder withRadius(int radius) {
+        public GrowingDiscAnimationRenderer.Builder withRadius(int radius) {
             renderer.mWithRadius = radius;
             return this;
         }
 
-        public ReverseConcentricCircleAnimationRenderer.Builder withTransparentRadius(int radius) {
+        public GrowingDiscAnimationRenderer.Builder withTransparentRadius(int radius) {
             renderer.mWithTransparentRadius = radius;
             return this;
         }
@@ -67,6 +67,7 @@ public class ReverseConcentricCircleAnimationRenderer implements AnimationRender
                 float val = (Float) valueAnimator.getAnimatedValue();
 
                 view.setRadius(val);
+                view.bringToFront();
                 view.forceLayout();
             }
 
