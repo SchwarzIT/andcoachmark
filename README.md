@@ -3,14 +3,14 @@
 [![codecov](https://codecov.io/gh/Kaufland/andcoachmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Kaufland/andcoachmark)
 [![KIS](https://img.shields.io/badge/KIS-awesome-red.svg)](http://www.spannende-it.de)
 
-<img src="https://picload.org/image/rlpaprpr/coachmark-logo.png"/>
+![](https://raw.githubusercontent.com/Kaufland/andcoachmark/master/coachmark.png)
 
 Is a library that provides a highly customizable CoachmarkView
 
 
 ## Demo
 
-![](https://picload.org/image/rlrporga/ezgif-2-96da2400cb.gif)
+![](https://raw.githubusercontent.com/Kaufland/andcoachmark/master/ezgif-2-96da2400cb.gif)
 
 
 ## Features
