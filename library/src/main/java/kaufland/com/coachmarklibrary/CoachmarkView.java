@@ -63,8 +63,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
 
     private View view;
 
-    private int windowHeight;
-
     private View mActionDescription;
 
     private View mDescription;
@@ -157,10 +155,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     }
 
     public CoachmarkView show() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        mWindowManager.getDefaultDisplay().getMetrics(metrics);
-
-        windowHeight = metrics.heightPixels;
 
         WindowManager.LayoutParams mWindowParams = new WindowManager.LayoutParams();
         mWindowParams.gravity = Gravity.TOP;
@@ -171,7 +165,11 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
 
+        int flag =  View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 
+        setSystemUiVisibility(flag);
         mIsInitialized = false;
         mWindowManager.addView(this, mWindowParams);
 
@@ -222,7 +220,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         int[] xy = new int[2];
         view.getLocationOnScreen(xy);
         float centerX = xy[0] + view.getWidth() / 2;
-        float centerY = xy[1] - (windowHeight - getHeight()) + view.getHeight() / 2;
+        float centerY = xy[1] + view.getHeight() / 2;
         return new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
     }
 
