@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'android-apt'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
 apply plugin: 'pmd'
@@ -42,18 +41,6 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
         maven { url uri('libs') }
         jcenter()
-
-    }
-    dependencies {
-        // replace with the current version of the android-apt plugin
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-}
-
-apt {
-    arguments {
-        library 'true'
-        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
     }
 }
 
@@ -77,13 +64,14 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest', group:
     executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
 }
 
+def AAVersion = "4.6.0"
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:${androidSupportVersion}"
-    apt "org.androidannotations:androidannotations:4.2.0"
     compile 'org.androidannotations:androidannotations-api:4.2.0'
     testCompile "junit:junit:${jUnitVersion}"
     testCompile 'org.mockito:mockito-core:1.10.19'
@@ -93,4 +81,7 @@ dependencies {
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.3'
     testCompile 'org.robolectric:robolectric:3.3.2'
     testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+    compile group: 'com.neenbedankt.gradle.plugins', name: 'android-apt', version: '1.8'
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
+    implementation "org.androidannotations:androidannotations-api:$AAVersion"
 }

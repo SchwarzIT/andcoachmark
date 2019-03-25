@@ -45,7 +45,7 @@ import kaufland.com.coachmarklibrary.renderer.description.TopOrBottomDescription
 public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, AnimationListener {
 
     @DimensionPixelSizeRes(resName = "default_margin_circle")
-    protected int marginAroundCircle;
+    protected int mMarginAroundCircle;
 
     @ColorRes(resName = "default_backcolor")
     protected int defaultBackColor;
@@ -71,8 +71,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     private View mActionDescription;
 
     private View mDescription;
-
-    private View mButtonsView;
 
     private boolean mIsInitialized;
 
@@ -155,7 +153,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         }
 
         if (mButtonRenderer != null) {
-            mButtonsView = mButtonRenderer.render(CoachmarkView.this);
+            mButtonRenderer.render(CoachmarkView.this);
         }
     }
 
@@ -214,7 +212,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     }
 
     public RectF calcCircleRectF() {
-        float radius = marginAroundCircle + mView.getWidth() / 2;
+        float radius = mMarginAroundCircle + mView.getWidth() / 2;
         int[] xy = new int[2];
         mView.getLocationInWindow(xy);
         float centerX = xy[0] + mView.getWidth() / 2;
@@ -263,8 +261,8 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         mDescriptionRenderer = descriptionRenderer;
     }
 
-    public void setView(View mView) {
-        this.mView = mView;
+    public void setView(View view) {
+        mView = view;
         mBitmap = null;
     }
 
@@ -277,7 +275,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     }
 
     public void setPaddingAroundCircle(int paddingAroundCircle) {
-        this.marginAroundCircle = paddingAroundCircle;
+        mMarginAroundCircle = paddingAroundCircle;
     }
 
     @Override

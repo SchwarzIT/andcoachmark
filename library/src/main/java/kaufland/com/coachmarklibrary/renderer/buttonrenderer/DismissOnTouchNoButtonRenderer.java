@@ -40,7 +40,6 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         inflated.setLayoutParams(params);
         inflated.setVisibility(View.VISIBLE);
-
         return inflated;
     }
 
@@ -51,7 +50,6 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         public Builder() {
             renderer = new DismissOnTouchNoButtonRenderer();
         }
-
 
         public Builder withListener(CoachmarkClickListener listener) {
             renderer.mListener = listener;

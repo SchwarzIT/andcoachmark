@@ -44,9 +44,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by sbra0902 on 15.03.17.
- */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 22)
 public class CoachmarkViewTest {
@@ -70,13 +67,13 @@ public class CoachmarkViewTest {
         CoachmarkView coachmarkView = mock(CoachmarkView.class);
         DisplayMetrics displayMetrics = mock(DisplayMetrics.class);
         Display display = mock(Display.class);
-        when(coachmarkView.mWindowManager.getDefaultDisplay()).thenReturn(display);
+
+        when(mCoachmarkView.mWindowManager.getDefaultDisplay()).thenReturn(display);
         display.getMetrics(displayMetrics);
         verify(display).getMetrics(displayMetrics);
 
         ArgumentCaptor<WindowManager.LayoutParams> params = ArgumentCaptor.forClass(WindowManager.LayoutParams.class);
         WindowManager.LayoutParams windowManagerMock = mock(WindowManager.LayoutParams.class);
-
 
         windowManagerMock.gravity = Gravity.TOP;
         windowManagerMock.x = 0;
@@ -86,7 +83,7 @@ public class CoachmarkViewTest {
         windowManagerMock.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
         windowManagerMock.format = PixelFormat.TRANSLUCENT;
 
-        Assert.assertFalse(coachmarkView.isIsInitialized());
+        Assert.assertFalse(mCoachmarkView.isIsInitialized());
     }
 
     @Test
@@ -144,7 +141,7 @@ public class CoachmarkViewTest {
         }).when(mClickedViewMock).getLocationInWindow(any(int[].class));
 
         mCoachmarkView.setView(mClickedViewMock);
-        mCoachmarkView.marginAroundCircle = 2;
+        mCoachmarkView.mMarginAroundCircle = 2;
         RectF mRectF = mCoachmarkView.calcCircleRectF();
         Assert.assertEquals(34.0f, mRectF.width());
         Assert.assertEquals(34.0f, mRectF.height());

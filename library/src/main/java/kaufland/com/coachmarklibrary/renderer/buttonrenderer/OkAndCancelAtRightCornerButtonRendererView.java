@@ -50,7 +50,6 @@ public class OkAndCancelAtRightCornerButtonRendererView extends FrameLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-
     public void setOkButton(String okText, final CoachmarkClickListener clickListener) {
 
         mGroupOk.setVisibility(VISIBLE);
@@ -81,5 +80,4 @@ public class OkAndCancelAtRightCornerButtonRendererView extends FrameLayout {
     public void setDismissListener(CoachmarkViewLayout dismissListener) {
         mDismissListener = dismissListener;
     }
-
 }
