@@ -2,13 +2,13 @@
 *.yml
 .gradle
 /local.properties
-.idea/*
+.idea/
 .DS_Store
-/mBuild
+/build
 /captures
 .externalNativeBuild
 projectFilesBackup/
 library/build/
 demo/build/
-.idea/dictionaries/
 build/
+README.md

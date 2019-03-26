@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        androidSupportVersion = '25.3.1'
+        androidSupportVersion = '27.0.1'
         androidBuildToolsVersion = '25.0.1'
         jUnitVersion = '4.12'
     }
@@ -12,9 +12,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.0'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'org.jacoco:org.jacoco.core:0.7.9'
     }
 }
 allprojects {
@@ -22,6 +20,9 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 

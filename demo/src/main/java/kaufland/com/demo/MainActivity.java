@@ -15,6 +15,7 @@ import kaufland.com.coachmarklibrary.renderer.animation.ConcentricCircleAnimatio
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
+import kaufland.com.coachmarklibrary.renderer.buttonrenderer.UnderlyingActionButtonRenderer;
 
 public class MainActivity extends AppCompatActivity implements DemoClickListener {
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
 
     @Override
     public void onClick(View view) {
-        setupCoachmark(view);
+        setupCoachmark(view, this);
     }
 
     private void setupWithoutButtons(View clickedView) {
@@ -85,34 +86,41 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
                 .buildAroundView(clickedView).show();
     }
 
-    private void setupCoachmark(View clickedView) {
+    private void setupCoachmark(View clickedView, DemoClickListener clickListener) {
         LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         View actionDescription = mInflater.inflate(R.layout.test_action_description, null);
         View description = mInflater.inflate(R.layout.test_description, null);
 
-        OkAndCancelAtRightCornerButtonRenderer buttonRenderer = new OkAndCancelAtRightCornerButtonRenderer.Builder(this)
-                .withCancelButton("Cancel", new CoachmarkClickListener() {
-                    @Override
-                    public boolean onClicked() {
-                        Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-                })
-                .withOkButton("OK", new CoachmarkClickListener() {
-                    @Override
-                    public boolean onClicked() {
-                        Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-                })
-                .build();
+//        OkAndCancelAtRightCornerButtonRenderer buttonRenderer = new OkAndCancelAtRightCornerButtonRenderer.Builder(this)
+//                .withCancelButton("Cancel", new CoachmarkClickListener() {
+//                    @Override
+//                    public boolean onClicked() {
+//                        Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                })
+//                .withOkButton("OK", new CoachmarkClickListener() {
+//                    @Override
+//                    public boolean onClicked() {
+//                        Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
+//                        return true;
+//                    }
+//                })
+//                .build();
+
+        UnderlyingActionButtonRenderer renderer = new UnderlyingActionButtonRenderer.Builder().withUnderlyingAction(new UnderlyingActionButtonRenderer.UnderlyingAction() {
+            @Override
+            public void onClick() {
+                Toast.makeText(MainActivity.this, "Underlying Action TOLLL ", Toast.LENGTH_LONG).show();
+            }
+        }).build();
 
         new CoachmarkViewBuilder(MainActivity.this)
                 .withAnimationRenderer(new ConcentricCircleAnimationRenderer.Builder().withDuration(500).build())
                 .withActionDescription(actionDescription)
                 .withDescription(description)
-                .withButtonRenderer(buttonRenderer)
+                .withButtonRenderer(renderer)
                 .buildAroundView(clickedView).show();
     }
 }

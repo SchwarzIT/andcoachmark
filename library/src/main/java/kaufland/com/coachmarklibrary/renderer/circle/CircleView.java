@@ -28,6 +28,8 @@ public class CircleView extends View {
 
     private float mRadius;
 
+    private float mTransparentRadius;
+
     private int defaultColor = Color.TRANSPARENT;
 
     public CircleView(Context context) {
@@ -54,6 +56,12 @@ public class CircleView extends View {
         paint.setColor(defaultColor);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
         canvas.drawCircle(mCenterX, mCenterY, mRadius, paint);
+        if(mTransparentRadius != 0){
+            Paint paintTransparent = new Paint();
+            paintTransparent.setColor(Color.YELLOW);
+            paintTransparent.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+            canvas.drawCircle(mCenterX, mCenterY, mTransparentRadius, paintTransparent);
+        }
         super.dispatchDraw(canvas);
     }
 
@@ -65,11 +73,15 @@ public class CircleView extends View {
         this.mCenterY = mCenterY;
     }
 
-    public void setRadius(float mRadius) {
-        this.mRadius = mRadius;
+    public void setRadius(float radius) {
+        this.mRadius = radius;
     }
 
     public void setColor(int color){
         defaultColor = color;
+    }
+
+    public void setTransparentRadius(float radius){
+        mTransparentRadius = radius;
     }
 }

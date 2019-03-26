@@ -66,8 +66,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
 
     private View mView;
 
-    private int windowHeight;
-
     private View mActionDescription;
 
     private View mDescription;
@@ -113,54 +111,48 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
 
         super.dispatchDraw(canvas);
 
-        if (!mIsInitialized) {
+        if(!mIsInitialized){
             mIsInitialized = true;
-            if (mView != null) {
+            if (mAnimationRenderer == null) {
+                mAnimationRenderer = new NoAnimationRenderer();
+            }
 
-                if (mAnimationRenderer == null) {
-                    mAnimationRenderer = new NoAnimationRenderer();
-                }
+            mAnimationRenderer.animate(CoachmarkView.this, mCircleView, CoachmarkView.this);
+        }
+    }
 
-                mAnimationRenderer.animate(CoachmarkView.this, mCircleView, CoachmarkView.this);
+        protected void createWindowFrame () {
+            mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas osCanvas = new Canvas(mBitmap);
+
+            Paint paint = new Paint();
+            paint.setColor(defaultBackColor);
+            osCanvas.drawRect(calcScreenRectF(), paint);
+
+            paint.setColor(Color.TRANSPARENT);
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+
+        }
+
+        @Override
+        public void onAnimationFinished () {
+            if (mDescription != null) {
+                mDescriptionRenderer.render(this, mDescription);
+                mDescription.setVisibility(VISIBLE);
+            }
+
+            if (mActionDescription != null && mActionDescriptionRenderer != null) {
+                renderActionDescription();
+                mActionDescription.setVisibility(VISIBLE);
+                mIvActionArrow.setVisibility(VISIBLE);
+            }
+
+            if (mButtonRenderer != null) {
+                mButtonRenderer.render(CoachmarkView.this);
             }
         }
-    }
-
-    protected void createWindowFrame() {
-        mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas osCanvas = new Canvas(mBitmap);
-
-        Paint paint = new Paint();
-        paint.setColor(defaultBackColor);
-        osCanvas.drawRect(calcScreenRectF(), paint);
-
-        paint.setColor(Color.TRANSPARENT);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-
-    }
-
-    @Override
-    public void onAnimationFinished() {
-        if (mDescription != null) {
-            mDescriptionRenderer.render(this, mDescription);
-            mDescription.setVisibility(VISIBLE);
-        }
-
-        if (mActionDescription != null && mActionDescriptionRenderer != null) {
-            renderActionDescription();
-            mActionDescription.setVisibility(VISIBLE);
-            mIvActionArrow.setVisibility(VISIBLE);
-        }
-
-        if (mButtonRenderer != null) {
-            mButtonRenderer.render(CoachmarkView.this);
-        }
-    }
 
     public CoachmarkView show() {
-        DisplayMetrics metrics = new DisplayMetrics();
-        mWindowManager.getDefaultDisplay().getMetrics(metrics);
-        windowHeight = metrics.heightPixels;
 
         WindowManager.LayoutParams mWindowParams = new WindowManager.LayoutParams();
         mWindowParams.gravity = Gravity.TOP;
@@ -171,52 +163,61 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
 
+        int flag =  View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+
+        setSystemUiVisibility(flag);
         mIsInitialized = false;
-        if (getWindowToken() == null) {
-            mWindowManager.addView(this, mWindowParams);
-        }
+        mWindowManager.addView(this, mWindowParams);
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             // drawing not working in SDK <= KITKAT
             setLayerType(LAYER_TYPE_SOFTWARE, null);
         }
+
         requestLayout();
+
         return this;
     }
 
-    private void renderActionDescription() {
+        private void renderActionDescription () {
 
-        for (ActionDescriptionRenderer renderer : mActionDescriptionRenderer) {
-            if (renderer.isRenderingPossible(this)) {
-                renderer.render(this, mActionDescription, mIvActionArrow);
-                return;
+            for (ActionDescriptionRenderer renderer : mActionDescriptionRenderer) {
+                if (renderer.isRenderingPossible(this)) {
+                    renderer.render(this, mActionDescription, mIvActionArrow);
+                    return;
+                }
             }
         }
-    }
 
-    @NonNull
-    public RectF calcActionArrowRect() {
-        return new RectF(mIvActionArrow.getX(), mIvActionArrow.getY(), mIvActionArrow.getX() + mIvActionArrow.getWidth(), mIvActionArrow.getY() + mIvActionArrow.getHeight());
-    }
+        @NonNull
+        public RectF calcActionArrowRect () {
+            return new RectF(mIvActionArrow.getX(), mIvActionArrow.getY(), mIvActionArrow.getX() + mIvActionArrow.getWidth(), mIvActionArrow.getY() + mIvActionArrow.getHeight());
+        }
 
-    public RectF calcActionDescriptionRect() {
-        return new RectF(mActionDescription.getX(), mActionDescription.getY(), mActionDescription.getX() + mActionDescription.getWidth(), mActionDescription.getY() + mActionDescription.getHeight());
-    }
+        public RectF calcActionDescriptionRect () {
+            return new RectF(mActionDescription.getX(), mActionDescription.getY(), mActionDescription.getX() + mActionDescription.getWidth(), mActionDescription.getY() + mActionDescription.getHeight());
+        }
 
-    public RectF calcDescriptionRect() {
-        return new RectF(mDescription.getX(), mDescription.getY(), mDescription.getX() + mDescription.getWidth(), mDescription.getY() + mDescription.getHeight());
-    }
+        public RectF calcDescriptionRect () {
+            return new RectF(mDescription.getX(), mDescription.getY(), mDescription.getX() + mDescription.getWidth(), mDescription.getY() + mDescription.getHeight());
+        }
 
-    public RectF calcScreenRectF() {
-        return new RectF(0, 0, getWidth(), getHeight());
-    }
+        public RectF calcScreenRectF () {
+            return new RectF(0, 0, getWidth(), getHeight());
+        }
 
     public RectF calcCircleRectF() {
-        float radius = mMarginAroundCircle + mView.getWidth() / 2;
+
+        if(view == null){
+            return new RectF();
+        }
+        float radius = marginArroundCircle + view.getWidth() / 2;
         int[] xy = new int[2];
-        mView.getLocationInWindow(xy);
-        float centerX = xy[0] + mView.getWidth() / 2;
-        float centerY = xy[1] - (windowHeight - getHeight()) + mView.getHeight() / 2;
+        view.getLocationOnScreen(xy);
+        float centerX = xy[0] + view.getWidth() / 2;
+        float centerY = xy[1] + view.getHeight() / 2;
         return new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
     }
 
@@ -261,10 +262,10 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         mDescriptionRenderer = descriptionRenderer;
     }
 
-    public void setView(View view) {
-        mView = view;
-        mBitmap = null;
-    }
+        public void setView (View view){
+            mView = view;
+            mBitmap = null;
+        }
 
     public void setButtonRenderer(ButtonRenderer buttonRenderer) {
         mButtonRenderer = buttonRenderer;
@@ -275,7 +276,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     }
 
     public void setPaddingAroundCircle(int paddingAroundCircle) {
-        mMarginAroundCircle = paddingAroundCircle;
+        this.marginArroundCircle = paddingAroundCircle;
     }
 
     @Override
@@ -283,11 +284,8 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         mWindowManager.removeView(CoachmarkView.this);
     }
 
+
     public void setAnimationRenderer(AnimationRenderer animationRenderer) {
         mAnimationRenderer = animationRenderer;
-    }
-
-    public boolean isIsInitialized() {
-        return mIsInitialized;
     }
 }

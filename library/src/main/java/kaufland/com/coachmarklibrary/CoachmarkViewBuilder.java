@@ -26,6 +26,11 @@ public class CoachmarkViewBuilder {
         return mCoachmarkView;
     }
 
+    public CoachmarkView build() {
+        mCoachmarkView.setView(null);
+        return mCoachmarkView;
+    }
+
     public CoachmarkViewBuilder withBackgroundColor(int color) {
         mCoachmarkView.setBackColor(color);
         return this;
@@ -54,6 +59,11 @@ public class CoachmarkViewBuilder {
 
     public CoachmarkViewBuilder withPaddingAroundCircle(int padding) {
         mCoachmarkView.setPaddingAroundCircle(padding);
+        return this;
+    }
+
+    public CoachmarkViewBuilder withCircleColor(int color) {
+        mCoachmarkView.mCircleView.setColor(color);
         return this;
     }
 

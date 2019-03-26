@@ -4,11 +4,10 @@ apply plugin: 'jacoco'
 apply plugin: 'pmd'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "${androidBuildToolsVersion}"
+    compileSdkVersion 27
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,16 +26,12 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
     }
 }
 
 buildscript {
     repositories {
+        google()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
         maven { url uri('libs') }
@@ -45,7 +40,7 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.0'
+    gradleVersion = '3.0.1'
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest', group: 'verification') {
@@ -67,8 +62,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest', group:
 def AAVersion = "4.6.0"
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile "com.android.support:appcompat-v7:${androidSupportVersion}"
@@ -84,4 +79,5 @@ dependencies {
     compile group: 'com.neenbedankt.gradle.plugins', name: 'android-apt', version: '1.8'
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
+
 }
