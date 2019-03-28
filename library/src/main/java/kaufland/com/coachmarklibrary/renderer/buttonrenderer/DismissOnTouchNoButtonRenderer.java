@@ -28,7 +28,6 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
             layout.addView(inflated);
         }
 
-
         inflated.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,9 +40,7 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         inflated.setLayoutParams(params);
         inflated.setVisibility(View.VISIBLE);
-
         return inflated;
-
     }
 
     public static class Builder {
@@ -54,7 +51,6 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
             renderer = new DismissOnTouchNoButtonRenderer();
         }
 
-
         public Builder withListener(CoachmarkClickListener listener) {
             renderer.mListener = listener;
             return this;
@@ -63,6 +59,5 @@ public class DismissOnTouchNoButtonRenderer implements ButtonRenderer {
         public DismissOnTouchNoButtonRenderer build() {
             return renderer;
         }
-
     }
 }

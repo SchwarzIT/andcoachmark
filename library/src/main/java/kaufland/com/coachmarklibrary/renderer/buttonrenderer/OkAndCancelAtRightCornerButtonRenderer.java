@@ -27,7 +27,6 @@ public class OkAndCancelAtRightCornerButtonRenderer implements ButtonRenderer {
 
     }
 
-
     public static class Builder {
 
         private OkAndCancelAtRightCornerButtonRenderer renderer;
@@ -49,6 +48,5 @@ public class OkAndCancelAtRightCornerButtonRenderer implements ButtonRenderer {
         public OkAndCancelAtRightCornerButtonRenderer build() {
             return renderer;
         }
-
     }
 }

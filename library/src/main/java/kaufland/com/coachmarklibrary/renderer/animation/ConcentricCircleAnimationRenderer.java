@@ -12,8 +12,8 @@ public class ConcentricCircleAnimationRenderer implements AnimationRenderer {
 
     private int mAnimationDuration = 500;
 
-    private ConcentricCircleAnimationRenderer(){
-        // just hidding the Contructor
+    private ConcentricCircleAnimationRenderer() {
+
     }
 
     public static class Builder {
@@ -38,7 +38,6 @@ public class ConcentricCircleAnimationRenderer implements AnimationRenderer {
     @Override
     public void animate(CoachmarkViewLayout layout, final CircleView view, final AnimationListener animationListener) {
 
-
         RectF mCircleRectF = layout.calcCircleRectF();
 
         view.setCenterX(mCircleRectF.centerX());
@@ -55,7 +54,6 @@ public class ConcentricCircleAnimationRenderer implements AnimationRenderer {
                 view.bringToFront();
                 view.forceLayout();
             }
-
         });
         animatorX.addListener(new Animator.AnimatorListener() {
             @Override
@@ -79,9 +77,5 @@ public class ConcentricCircleAnimationRenderer implements AnimationRenderer {
             }
         });
         animatorX.start();
-
-
-
-
     }
 }

@@ -12,10 +12,8 @@ public class LeftOfCircleActionDescriptionRenderer implements ActionDescriptionR
 
         RectF circleRectangle = layout.calcCircleRectF();
         int mWidth = actionDescription.getWidth() + actionArrow.getWidth();
-
         actionDescription.setX((int) (circleRectangle.left - mWidth));
         actionDescription.setY(circleRectangle.centerY() - (actionDescription.getHeight() / 2));
-
         actionArrow.setX(circleRectangle.left - actionArrow.getWidth());
         actionArrow.setY(circleRectangle.centerY() - (actionArrow.getHeight() / 2));
     }
@@ -25,9 +23,6 @@ public class LeftOfCircleActionDescriptionRenderer implements ActionDescriptionR
         RectF circleRectangle = layout.calcCircleRectF();
         RectF actionDescriptionRectangle = layout.calcActionDescriptionRect();
         RectF actionArrowRectangle = layout.calcActionArrowRect();
-
         return (actionDescriptionRectangle.width() + actionArrowRectangle.width()) < circleRectangle.left;
     }
-
-
 }

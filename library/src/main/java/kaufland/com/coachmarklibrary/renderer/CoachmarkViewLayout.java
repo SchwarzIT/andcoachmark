@@ -24,5 +24,6 @@ public interface CoachmarkViewLayout {
 
     void addView(View inflated);
 
-    void removeView(View inflated);
+    void removeView(View view);
+
 }

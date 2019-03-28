@@ -3,6 +3,7 @@
 buildscript {
     ext {
         androidSupportVersion = '27.0.1'
+        androidBuildToolsVersion = '25.0.1'
         jUnitVersion = '4.12'
     }
     repositories {
@@ -10,15 +11,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'org.jacoco:org.jacoco.core:0.7.9'
     }
 }
-
 allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven {
             url "https://maven.google.com"
         }
