@@ -216,7 +216,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         int[] xy = new int[2];
         mView.getLocationOnScreen(xy);
         float centerX = (xy[0] == 0 ? mView.getX() : xy[0]) + mView.getWidth() / 2;
-        float centerY = (xy[1] == 0 ? mView.getY() : xy[0]) + mView.getHeight() / 2;
+        float centerY = (xy[1] == 0 ? mView.getY() : xy[1]) + mView.getHeight() / 2;
         return new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
     }
 
