@@ -9,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
-import kaufland.com.coachmarklibrary.CoachmarkClickListener;
 import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
 import kaufland.com.coachmarklibrary.renderer.animation.ConcentricCircleAnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
-import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkAndCancelAtRightCornerButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.UnderlyingActionButtonRenderer;
 
@@ -33,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         mAdapter = new DemoAdapter();
         mAdapter.setClickListener(this);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mFab = findViewById(R.id.fab);
 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         UnderlyingActionButtonRenderer renderer = new UnderlyingActionButtonRenderer.Builder().withUnderlyingAction(new UnderlyingActionButtonRenderer.UnderlyingAction() {
             @Override
             public void onClick() {
-                Toast.makeText(MainActivity.this, "Underlying Action TOLLL ", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Underlying Action", Toast.LENGTH_LONG).show();
             }
         }).build();
 

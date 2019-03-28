@@ -10,7 +10,6 @@ import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
 import kaufland.com.coachmarklibrary.renderer.CoachmarkViewLayout;
-import kaufland.com.coachmarklibrary.renderer.actiondescription.BelowCircleActionDescriptionRenderer;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -45,7 +44,6 @@ public class BelowCircleActionDescriptionRendererTest {
         verify(actionArrow, times(1)).setY(75);
     }
 
-
     @Test
     public void isRenderingPossibleTest() {
 
@@ -62,7 +60,7 @@ public class BelowCircleActionDescriptionRendererTest {
     }
 
     @Test
-    public void renderingNotPossibleNotEnoughtLeftSpaceTest() {
+    public void renderingNotPossibleNotEnoughLeftSpaceTest() {
 
         CoachmarkViewLayout layoutMock = Mockito.mock(CoachmarkViewLayout.class);
 
@@ -70,22 +68,17 @@ public class BelowCircleActionDescriptionRendererTest {
         Mockito.when(layoutMock.calcCircleRectF()).thenReturn(new RectF(50, 50, 75, 75));
         Mockito.when(layoutMock.calcActionDescriptionRect()).thenReturn(new RectF(0, 0, 126, 20));
         Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0, 0, 10, 10));
-
         Assert.assertFalse(new BelowCircleActionDescriptionRenderer().isRenderingPossible(layoutMock));
-
     }
 
     @Test
-    public void renderingNotPossibleNotEnoughtBottomSpaceTest() {
+    public void renderingNotPossibleNotEnoughBottomSpaceTest() {
 
         CoachmarkViewLayout layoutMock = Mockito.mock(CoachmarkViewLayout.class);
-
         Mockito.when(layoutMock.calcScreenRectF()).thenReturn(new RectF(0, 0, 300, 95));
         Mockito.when(layoutMock.calcCircleRectF()).thenReturn(new RectF(50, 50, 75, 75));
         Mockito.when(layoutMock.calcActionDescriptionRect()).thenReturn(new RectF(0, 0, 20, 5));
         Mockito.when(layoutMock.calcActionArrowRect()).thenReturn(new RectF(0, 0, 10, 15));
-
         Assert.assertFalse(new BelowCircleActionDescriptionRenderer().isRenderingPossible(layoutMock));
     }
-
 }
