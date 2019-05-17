@@ -160,8 +160,7 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         mWindowParams.y = 0;
         mWindowParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN |
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
 
         int flag = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
