@@ -84,6 +84,8 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
 
     private AnimationRenderer mAnimationRenderer;
 
+    private DismissListener mDismissListener;
+
     public CoachmarkView(Context context) {
         super(context);
     }
@@ -130,7 +132,6 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
 
         paint.setColor(Color.TRANSPARENT);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
-
     }
 
     @Override
@@ -159,7 +160,8 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         mWindowParams.y = 0;
         mWindowParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         mWindowParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN;
+        mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN |
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_OVERSCAN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         mWindowParams.format = PixelFormat.TRANSLUCENT;
 
         int flag = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -212,11 +214,12 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
         if (mView == null) {
             return new RectF();
         }
+
         float radius = mMarginAroundCircle + mView.getWidth() / 2;
         int[] xy = new int[2];
         mView.getLocationOnScreen(xy);
-        float centerX = (xy[0] == 0 ? mView.getX() : xy[0]) + mView.getWidth() / 2;
-        float centerY = (xy[1] == 0 ? mView.getY() : xy[1]) + mView.getHeight() / 2;
+        float centerX = xy[0] + mView.getWidth() / 2;
+        float centerY = xy[1] + mView.getHeight() / 2;
         return new RectF(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
     }
 
@@ -281,10 +284,17 @@ public class CoachmarkView extends FrameLayout implements CoachmarkViewLayout, A
     @Override
     public void dismiss() {
         mWindowManager.removeView(CoachmarkView.this);
+        if (mDismissListener != null) {
+            mDismissListener.onDismiss();
+        }
     }
 
 
     public void setAnimationRenderer(AnimationRenderer animationRenderer) {
         mAnimationRenderer = animationRenderer;
+    }
+
+    public void setDismissListener(DismissListener listener) {
+        mDismissListener = listener;
     }
 }

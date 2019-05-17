@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import kaufland.com.coachmarklibrary.CoachmarkViewBuilder;
+import kaufland.com.coachmarklibrary.renderer.actiondescription.LeftOfCircleActionDescriptionRenderer;
 import kaufland.com.coachmarklibrary.renderer.animation.ConcentricCircleAnimationRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.DismissOnTouchNoButtonRenderer;
 import kaufland.com.coachmarklibrary.renderer.buttonrenderer.OkBelowDescriptionButtonRenderer;
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements DemoClickListener
         }).build();
 
         new CoachmarkViewBuilder(MainActivity.this)
+                .withActionDescriptionRenderers(new LeftOfCircleActionDescriptionRenderer())
                 .withAnimationRenderer(new ConcentricCircleAnimationRenderer.Builder().withDuration(500).build())
                 .withActionDescription(actionDescription)
                 .withDescription(description)

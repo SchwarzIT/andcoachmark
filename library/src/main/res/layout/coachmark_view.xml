@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/circle"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ImageView
+        android:id="@+id/iv_action_arrow"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/arrow_size"
         android:padding="2dp"
-        android:id="@+id/iv_action_arrow"
         android:scaleType="center"
-        android:visibility="invisible"
-        android:src="@drawable/ic_arrow_forward_white_24dp"/>
+        android:src="@drawable/ic_arrow_forward_white_24dp"
+        android:visibility="invisible" />
 
     <kaufland.com.coachmarklibrary.renderer.circle.CircleView_
-        android:layout_width="wrap_content"
         android:id="@+id/circle_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </FrameLayout>
