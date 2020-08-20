@@ -1,9 +1,9 @@
-[![](https://jitpack.io/v/Kaufland/andcoachmark.svg)](https://jitpack.io/#Kaufland/andcoachmark)
-[![Build Status](https://travis-ci.org/Kaufland/andcoachmark.svg?branch=master)](https://travis-ci.org/Kaufland/andcoachmark)
-[![codecov](https://codecov.io/gh/Kaufland/andcoachmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Kaufland/andcoachmark)
+[![](https://jitpack.io/v/SchwarzIT/andcoachmark.svg)](https://jitpack.io/#SchwarzIT/andcoachmark)
+[![Build Status](https://travis-ci.org/SchwarzIT/andcoachmark.svg?branch=master)](https://travis-ci.org/SchwarzIT/andcoachmark)
+[![codecov](https://codecov.io/gh/Schwarzit/andcoachmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Schwarzit/andcoachmark)
 [![KIS](https://img.shields.io/badge/KIS-awesome-red.svg)](http://www.spannende-it.de)
 
-![](https://raw.githubusercontent.com/Kaufland/andcoachmark/master/coachmark.png)
+![](https://raw.githubusercontent.com/SchwarzIT/andcoachmark/master/coachmark.png)
 
 Is a library that provides a highly customizable CoachmarkView
 
