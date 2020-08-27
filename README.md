@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/Kaufland/andcoachmark/branch/master/graph/badge.svg)](https://codecov.io/gh/Kaufland/andcoachmark)
 [![SIT](https://img.shields.io/badge/SIT-awesome-blueviolet.svg)](https://jobs.schwarz)
 
-![](https://raw.githubusercontent.com/Kaufland/andcoachmark/master/coachmark.png)
+![](https://raw.githubusercontent.com/SchwarzIT/andcoachmark/master/coachmark.png)
 
 Is a library that provides a highly customizable CoachmarkView
 
